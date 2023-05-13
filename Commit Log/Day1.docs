@@ -1,0 +1,37 @@
+[ Things I did today ]
+- Got the basic framework setup for multiplatform text editing
+    - It is going to be a while before this thing supports another OS
+    - I am hoping for Windows support to be in by the end of the year
+    - MacOS support with come when I can get my hands on a mac and learn how windowing works there
+- Application frameworks so that I can use the underlying rendering engine in other projects
+    - Idk why i wrote it in this way but there are other things I want to do with the rendering engine im writing
+- Multiplatform support by just changing the define in {main.cpp}
+    - The whole thing can be recompiled for a different of by chaning the ENGINE_OS_(os name)
+    - I like doing it this way because the computer handles it for me so I don't have to do crap
+- Ability to switch between X11 and Wayland window managers by changing a second define
+    - Wayland windowing is now yet implemented I am working on implementing that currently
+- Basic X11 windowing system that makes your computer slow down to 2 FPS
+    - Idk why it does this but I cant find any reasoning on the internet so its time to learn a lot more
+
+[ Things im doing tommorow ]
+- Make the X11 windowing system not slow your computer down
+    - I am going to read the full X11 docs and reading is my worst enemy wish me luck
+- Make the X11 windowing system be able to hook into an OpenGL context for rendering
+    - Its really easy to do this with Win32 so im hoping its that easy on Linux because im going to die if its not
+- Get a triangle on the screen with OpenGL
+    - this is not going to be a real renderer with vertex buffers and crap just OpenGL 1.0 type stuff
+- Get input and events working so I can interact with the editor
+    - I know how to do this I already found how on the internet but I want a lot more modular input system
+    - Im probaly just going to steal the input/event system from Hazel because I like it and im lazy
+
+[ Things I would love to do tommorow ]
+- Make a Wayland windowing system
+    - I have zero clue how to get Wayland installed on void linux so this is not going to happen
+- Get some real OpenGL up and running
+    - If i have time this is what I am going to do
+- Make some concepts for how this is going to look when it is done because Graphic Design is not my passion
+    - This is probaly going to happen when I am skipping out on sleep because i dont need to make much noise doing that    
+
+[ Goals for tommorow ]
+- Work for atleast 2 hours on this
+- Get 500 lines of code down 
