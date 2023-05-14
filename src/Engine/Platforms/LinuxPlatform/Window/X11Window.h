@@ -14,27 +14,38 @@ namespace Engine {
         int screen;
         Window win;
         GC gc;
+        XEvent event;
     public:
-        PlatformWindow(WindowData data) {
+        PlatformWindow(WindowData data, EventSystem* event) {
             this->windowData = data;
 
             dis = XOpenDisplay((char *)0);
             screen = DefaultScreen(dis);
-            win = XCreateSimpleWindow(dis, DefaultRootWindow(dis), 0, 0, data.WindowSize.x, data.WindowSize.y, 5, 0, 0);
+        
+            win = XCreateSimpleWindow(dis, DefaultRootWindow(dis), 0, 0, data.WindowSize.x, data.WindowSize.y, 5, BlackPixel(dis, screen), WhitePixel(dis, screen));
             XSetStandardProperties(dis, win, data.WindowName, data.WindowName, None, NULL, 0, NULL);
             gc = XCreateGC(dis, win, 0, 0);
-            XSetBackground(dis, gc, 0);
-            XSetForeground(dis, gc, 0);
+            XSelectInput(dis, win, NoEventMask | ExposureMask | ButtonPressMask | KeyPressMask);
+            XSetBackground(dis, gc, WhitePixel(dis, screen));
+            XSetForeground(dis, gc, BlackPixel(dis, screen));
+
+            XClearWindow(dis, win);
+            XMapRaised(dis, win);
+
+            event->RegisterWindow(this);
+        }
+
+        virtual void Open() override {
             XClearWindow(dis, win);
             XMapRaised(dis, win);
         }
 
-        virtual void Open() override {
-            
-        }
-
-        virtual void Update() override {
-            XClearWindow(dis, win);
+        virtual void HandleEvents() override {
+            XNextEvent(dis, &event);
+            if(event.type==Expose) {
+                XClearWindow(dis, win);
+            }
+            return;
         }
 
         virtual void Close() override {

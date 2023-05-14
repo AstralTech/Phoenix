@@ -5,9 +5,9 @@
 
 #include "../PlatformBase.h"
 
-#if (LINUXOS_WINDOWING_SYSTEM == 0)
+#if (LINUXOS_WINDOWING_SYSTEM == X11)
 #include "Window/X11Window.h"
-#elif (LINUXOS_WINDOWING_SYSTEM == 1)
+#elif (LINUXOS_WINDOWING_SYSTEM == WAYLAND)
 #include "Window/WaylandWindow.h"
 #endif
 
@@ -17,8 +17,8 @@ namespace Engine {
         Platform() {}
     public:
         virtual const char* GetName() override { return "Linux"; }
-        virtual ApplicationWindow* CreateWindow(WindowData data) override {
-            return new PlatformWindow(data);
+        virtual ApplicationWindow* CreateWindow(WindowData data, EventSystem* event) override {
+            return new PlatformWindow(data, event);
         }
     };
 }

@@ -1,0 +1,27 @@
+[ Things I did today ]
+- Make the X11 windowing system not slow your computer down
+    - I was clearing the screen every frame not when a re paint was executed
+- Build an Execution Manager
+    - Execution Manager for handling event systems that run on a different thread
+    - A system that can be ran on a different thread so it can process in parallel
+- Switched to using CMake as the build system
+    - I dont know why i started to just use a long G++ command in the first place but it was a horrible idea
+    - The biggest perk of this is that it allows less skilled people to build the application without my help
+
+[ Things I did not finish today ]
+- OpenGL context for rendering
+    - I have no idea every time i tried to make it work i would just get a seg fault so tommorow i guess
+- Triangle on the screen
+    - Well with no OpenGL rendering context its kinda hard to make a triangle appear on the screen
+- Event System
+    - I did not see a need for the event system yet so i decided not to do it today
+
+[ Things im doing tommorow ]
+- Wayland windowing
+    - I want to test out the engines functionalist to easily switch between entired aspect with ease
+- Render something
+    - I will be fine with just the background I just want to get something up on screen
+
+[ Things I would love to do tommorow ]
+
+[ Goals for tommorow ]

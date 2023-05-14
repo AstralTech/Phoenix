@@ -1,6 +1,7 @@
 #pragma once 
 
 #include "../Types/MultiData.h"
+#include "../Threading/Systems/EventSystem/EventSystem.h"
 
 namespace Engine {
     struct WindowData {
