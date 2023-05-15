@@ -3,7 +3,7 @@
 
 namespace Phoenix {
     void PhoenixApplication::RunApp() {
-        std::cout << "Welcome to the Phoenix Text editor if your window does not open shortly then I have zero clue what is going on plese report this bug <3";
+        std::cout << "Welcome to the Phoenix Text editor if your window does not open shortly then I have zero clue what is going on plese report this bug <3\n";
 
         // Create the rendering group
         renderingGroup = new Engine::ExecutionGroup(); 
@@ -33,7 +33,11 @@ namespace Phoenix {
     }
 
     void PhoenixApplication::UpdateApp() {
+        if (!main_window->IsOpen()) {
+            EndApp();
+        }
 
+        main_window->Render();
     }
 
     void PhoenixApplication::CloseApp() {

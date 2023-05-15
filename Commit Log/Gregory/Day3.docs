@@ -1,9 +1,24 @@
 [ Things I did today ]
+- Got OpenGL kinda working
+    - OpenGL is initlizing and everything but i just need to work on the threading
+- Broke the whole windowing system
+    - IDK even know what I did one second it was working an then one second it was not
 
 [ Things I did not finish today ]
+- Everything I listed yesterday
+    - I just did not work on this today because im doing a whole rework of the windowing system
 
 [ Things im doing tommorow ]
+- Render buffers
+    - A render buffer what you render to and then you can render multible render buffers to a window
 
 [ Things I would love to do tommorow ]
+- Actually Display something on the screen
+    - Yah this crap is not going to happen
+
+[ Bugs that I am aware of ]
+- The whole damn application does not start
 
 [ Goals for tommorow ]
+- Code for atleast 1 hour
+- Get 100 lines of code down
