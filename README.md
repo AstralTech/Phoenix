@@ -23,8 +23,7 @@
 ## Timeline
 
 <details>
-<summary>May</summary>
-<br>
+<summary style="font-weight:bold">May</summary>
 1. Finish the X11 windowing system <br />
 2. Make OpenGL work and add support for everything up to OpenGL 4.6 <br />
 3. Finish the design and color schemes the Editor will support <br />
@@ -32,16 +31,14 @@
 </details>
 
 <details>
-<summary>June</summary>
-<br>
+<summary style="font-weight:bold">June</summary>
 1. Start a basic Wayland windowing system even. <br />
 2. Finish the system for opening editor windows like a file view <br />
 3. Start work on the Win32 windowing system so you can use the editor on windows
 </details>
 
 <details>
-<summary>July</summary>
-<br>
+<summary style="font-weight:bold">July</summary>
 1. Add the rest of the functions into the Wayland windowing system. <br />
 2. Optimize the crap out of the Renderer <br >
 3. Start work on docking so I can organize my windows <br >
@@ -50,30 +47,25 @@
 
 <details>
 <summary>August</summary>
-<br>
 1. Il work this out when we get there
 </details>
 
 <details>
 <summary>September</summary>
-<br>
 1. Il work this out when we get there
 </details>
 
 <details>
 <summary>October</summary>
-<br>
 1. Il work this out when we get there
 </details>
 
 <details>
 <summary>November</summary>
-<br>
 1. Il work this out when we get there
 </details>
 
 <details>
 <summary>December</summary>
-<br>
 1. Il work this out when we get there
 </details>
