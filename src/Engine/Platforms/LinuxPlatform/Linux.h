@@ -3,22 +3,11 @@
 #define X11 0
 #define WAYLAND 1
 
-#include "../PlatformBase.h"
-
-#if (LINUXOS_WINDOWING_SYSTEM == X11)
-#include "Window/X11Window.h"
-#elif (LINUXOS_WINDOWING_SYSTEM == WAYLAND)
-#include "Window/WaylandWindow.h"
-#endif
+#include "Windowing/LinuxPlatformWindow.h"
 
 namespace Engine {
-    class Platform : public Engine::PlatformBase {
+    class Platform {
     public:
-        Platform() {}
-    public:
-        virtual const char* GetName() override { return "Linux"; }
-        virtual ApplicationWindow* CreateWindow(WindowData data, EventSystem* event) override {
-            return new PlatformWindow(data, event);
-        }
+        const char* GetName() { return "Linux"; }
     };
 }

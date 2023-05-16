@@ -4,8 +4,6 @@
 namespace Phoenix {
     class PhoenixApplication : public Engine::Application {
     public:
-        Engine::ApplicationWindow* main_window;
-
         // Exection Manager
         Engine::ExecutionManager* executionManager;
 
@@ -13,6 +11,7 @@ namespace Phoenix {
         Engine::ExecutionGroup* eventGroup;
 
         Engine::RenderingSystem* renderingSystem;
+        Engine::WindowingSystem* windowingSystem;
         Engine::EventSystem* eventSystem;
     public:
         PhoenixApplication() {}

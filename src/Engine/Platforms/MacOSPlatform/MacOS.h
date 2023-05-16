@@ -1,11 +1,8 @@
 #pragma once
-#include "../PlatformBase.h"
 
 namespace Engine {
-    class Platform : public Engine::PlatformBase {
+    class Platform {
     public:
-        Platform() {}
-    public:
-        virtual const char* GetName() override { return "MacOS"; }
+        const char* GetName() { return "MacOS"; }
     };
 }

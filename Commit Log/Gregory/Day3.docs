@@ -1,23 +1,34 @@
 [ Things I did today ]
-- Got OpenGL kinda working
-    - OpenGL is initlizing and everything but i just need to work on the threading
-- Broke the whole windowing system
-    - IDK even know what I did one second it was working an then one second it was not
+- Improved the windowing system so that it is on its own thread
+    - I moved the windowing system to be handled by the execution manager idk why it wasnt like this already
+- Allowed Multible windows to be opended at once
+    - The window manager can now process windows and open and close them on the fly
+    - I still want to add a few quality of life things like a main window and such but that is for later
+- Removed the switching between X11 and Wayland
+    - The way that the new windowing system works I am just not going to support this system for a little while
+- Added a little bit to the Event system
+    - The event system still does not allow you to check the status of events but it does have some internal storage
 
 [ Things I did not finish today ]
-- Everything I listed yesterday
-    - I just did not work on this today because im doing a whole rework of the windowing system
+- OpenGL context
+    - After the whole rewrite of the windowing system that still needs some finish touches I could not get this working
 
 [ Things im doing tommorow ]
 - Render buffers
-    - A render buffer what you render to and then you can render multible render buffers to a window
+    - These are just a fancy frame buffer
+- Drawing Render buffers to a specific window
+    - Each render buffer can draw to a window and they can just chose to draw in a section if they want to
 
 [ Things I would love to do tommorow ]
-- Actually Display something on the screen
-    - Yah this crap is not going to happen
+- Start writing a full renderer
+    - This is not going to happen because im going to spend the day fixing the windowing system
+- Stop each thread from using 100% of the resources availiable
+    - Idk why each thread is doing this but I think i know how to fix it im just going to limit the framerate of the Application to 60FPS
+- Allow the window manager to create Popup windows
+    - Idk if this is natively supported in X11 but popups are a requirement for a text editor
 
 [ Bugs that I am aware of ]
-- The whole damn application does not start
+- None at the moment some how
 
 [ Goals for tommorow ]
 - Code for atleast 1 hour

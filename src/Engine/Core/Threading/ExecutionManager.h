@@ -3,23 +3,11 @@
 #include "thread"
 
 namespace Engine {
-    class ExecutionSystem {
-    public:
-        int SystemID = 0;
-        bool Started = false;
-        
-        static int CurrentID;
-    public:
-        ExecutionSystem() { SystemID = CurrentID; CurrentID++; }
-
-        virtual void OnStart() = 0;
-        virtual void OnUpdate() = 0;
-        virtual void OnEnd() = 0;
-    };
-
     class ExecutionThread {
-    private:
+    protected:
         std::thread internal;
+    public:
+        bool IsRunning = true;
     public:
         ExecutionThread() {}
         template <typename T>
@@ -32,10 +20,42 @@ namespace Engine {
             internal = std::thread(thread, funciton);
         }
 
+        void Pause () {
+            IsRunning = false;
+        }
+
+        void Kill() {
+            internal.~thread();
+        }
+
         void JoinIn() {
             internal.join();
         }
     };
+
+    class ExecutionGroup;
+
+    class ExecutionSystem {
+    public:
+        int SystemID = 0;
+        bool Started = false;
+        
+        static int CurrentID;
+
+        ExecutionGroup* currentGroup;
+    public:
+        ExecutionSystem() { SystemID = CurrentID; CurrentID++; }
+
+        template <typename T, typename Q>
+        ExecutionThread* RequestThread(T value, Q function) {
+            return currentGroup->CreateThread(value, function);
+        }
+
+        virtual void OnStart() = 0;
+        virtual void OnUpdate() = 0;
+        virtual void OnEnd() = 0;
+    };
+
 
     class ExecutionGroup {
     public:
@@ -46,11 +66,17 @@ namespace Engine {
 
         bool Started = false;
     public:
+        template <typename T, typename Q>
+        ExecutionThread* CreateThread(T value, Q function) {
+            return new ExecutionThread(value, function);
+        }
+
         void BindSystem(ExecutionSystem* system) {
             groupedSystems.push_back(system);
         }
 
         void RunSystem(ExecutionSystem* system) {
+            system->currentGroup = this;
             if (!system->Started) {
                 system->OnStart();
                 system->Started = true;
@@ -76,6 +102,12 @@ namespace Engine {
             for (int i = 0; i < groupedSystems.size(); i++) {
                 groupedSystems[i]->OnEnd();
             }
+
+            for (int i = 0; i < inUseThreads.size(); i++) {
+                inUseThreads[i]->Kill();
+                inUseThreads[i]->JoinIn();
+            }
+
             mainThread->JoinIn();
         }
     };

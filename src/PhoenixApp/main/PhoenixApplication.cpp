@@ -7,9 +7,18 @@ namespace Phoenix {
 
         // Create the rendering group
         renderingGroup = new Engine::ExecutionGroup(); 
+
+        windowingSystem = new Engine::WindowingSystem();
+        Engine::WindowObject* PhoenixWindow = new Engine::WindowObject("Phoenix Text Editor [v0.01][x86][Linux]", Int2(1920, 1080));
+        Engine::WindowObject* testWindow = new Engine::WindowObject("This is an amazing test window", Int2(1280, 720));
+        windowingSystem->OpenMainWindow(PhoenixWindow);
+        windowingSystem->OpenAuxiliaryWindow(testWindow);
+
         renderingSystem = new Engine::RenderingSystem();
 
+        renderingGroup->BindSystem(windowingSystem);
         renderingGroup->BindSystem(renderingSystem);
+
 
         // Create the event group
         eventGroup = new Engine::ExecutionGroup();
@@ -23,25 +32,14 @@ namespace Phoenix {
         executionManager->BindGroup(eventGroup);
 
         executionManager->StartExecution();
-
-        main_window = platform->CreateWindow(Engine::WindowData(
-            "Phoenix Text Editor v0.01, x86", // Window Name
-            Int2(1280, 720) // Window Size
-        ), eventSystem);
-
-        main_window->Open();
     }
 
     void PhoenixApplication::UpdateApp() {
-        if (!main_window->IsOpen()) {
+        if (windowingSystem->WindowsClosed())
             EndApp();
-        }
-
-        main_window->Render();
     }
 
     void PhoenixApplication::CloseApp() {
         executionManager->StopExecution();
-        main_window->Close();
     }
 }

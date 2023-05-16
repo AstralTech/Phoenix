@@ -6,7 +6,7 @@ namespace Engine {
         
     }
     void RenderingSystem::OnUpdate() {
-        
+ 
     }
     void RenderingSystem::OnEnd() {
 
