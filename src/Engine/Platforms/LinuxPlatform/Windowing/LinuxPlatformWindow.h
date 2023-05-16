@@ -68,8 +68,9 @@ namespace Engine {
         }
 
         void ManageWindowEvents() {
-            std::cout << "Handaling Event\n";
-
+            if (isClosed)
+                return;
+            
             XNextEvent(display, &ev);
             if (ev.type == Expose) {
                 XClearWindow(display, window);
@@ -79,16 +80,12 @@ namespace Engine {
 					CloseWindow();
 				}
 			}
-			else if (ev.type == DestroyNotify) { 
-				CloseWindow();
-			}
         }
 
         void CloseWindow() {
             XDestroyWindow(display, window);
-            XFree(screen); 
             XCloseDisplay(display);
-            isClosed = true;           
+            isClosed = true;          
         }
     };
 }

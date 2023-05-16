@@ -1,0 +1,16 @@
+[ Things I did today ]
+- Moved every window to run its own thread for events
+    - Because X11 is stupid the Window Events are blocking so they each need to run on there own thread
+
+[ Things I did not finish today ]
+
+[ Things im doing tommorow ]
+
+[ Things I would love to do tommorow ]
+
+[ Bugs that I am aware of ]
+- None at the moment some how
+
+[ Goals for tommorow ]
+- Code for atleast 1 hour
+- Get 100 lines of code down
