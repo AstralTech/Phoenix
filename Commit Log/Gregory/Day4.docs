@@ -1,6 +1,8 @@
 [ Things I did today ]
 - Moved every window to run its own thread for events
     - Because X11 is stupid the Window Events are blocking so they each need to run on there own thread
+- Moved to just having one display server
+    - I did this because of 1. Memory and 2. its easier to manage the OpenGL context
 
 [ Things I did not finish today ]
 

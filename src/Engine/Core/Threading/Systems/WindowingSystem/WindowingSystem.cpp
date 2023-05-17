@@ -13,8 +13,8 @@ namespace Engine {
         PlatformWindow* platformWindow = new PlatformWindow(windowManager, window->windowObject->name, window->windowObject->size.x, window->windowObject->size.y);
         window->platformWindow = platformWindow;
         window->Opened = true;
-
         window->EventThread = RequestThread(&WindowingWindow::HandleEvents, &(*window));
+
     }
 
     void WindowingSystem::OpenWindowingWindows() {
