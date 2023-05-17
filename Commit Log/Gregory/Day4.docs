@@ -11,6 +11,10 @@
     - I just got a context working I wasnt doing this crap
 
 [ Things im doing tommorow ]
+- I want to make seperate CMake files for the rendering engine and application
+    - Im starting to get the hang of CMake so i want to mess around and start compiling the engine as a static library
+- Get more then just OpenGL 1.1 working
+    - I already have glad in the project idk if you noticed but it also takes up about 95.7% of the code right now
 - Cleaning up the context creation
     - Im making this more modular and taking most of it out of LinuxPlatformWindow.h
 - Designing the API for creating and drawing Render buffers
