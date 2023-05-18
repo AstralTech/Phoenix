@@ -1,7 +1,5 @@
 <center><h1>IDE of the Future</h1></center>
 
-<center><h2 style="color:red; font-weight: bold;">THIS IS A DEVELOPMENT BUILD USE THE RELEASE BRANCH ON THE ASTRAL ORGANIZATION</h2></center>
-
 ## How to build and run
 >### Steps to build
 >> 1. mkdir build <br />
@@ -19,6 +17,15 @@
 > 1. The logo is generated with craiyon <br />
 > 2. If you make a pull request please dont make it on any of the forks from devlopers make it on the Development Branch
 > 3. This only support Linux with the X11 display manager so don't try to compile for any other OS/Display Manager
+> 4. Project Roles
+>> Project Maintainer: Gregory Wells <br />
+>> Project Admins: None at the momment<br />
+>> Developers: Gregory Wells <br />
+> 5. If you would like to become a devloper please email one of the admins or most preferably email me because the email will end up with me eventually.
+> 6. Only admins will process pull requests so do not email me asking for me to process your pull request. <br />
+
+## Contact
+> For requests to join the development team email me at gregory@astraltech.dev
 
 ## Timeline
 
