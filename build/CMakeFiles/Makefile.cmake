@@ -9,6 +9,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "/home/gregory/Projects/Applications/PhoenixEditor/CMakeLists.txt"
   "/home/gregory/Projects/Applications/PhoenixEditor/Projects/Gryphon/CMakeLists.txt"
+  "/home/gregory/Projects/Applications/PhoenixEditor/Projects/PhoenixApp/CMakeLists.txt"
   "CMakeFiles/3.26.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.26.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.26.3/CMakeSystem.cmake"
@@ -42,11 +43,12 @@ set(CMAKE_MAKEFILE_OUTPUTS
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
+  "Projects/PhoenixApp/CMakeFiles/CMakeDirectoryInformation.cmake"
   "Projects/Gryphon/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/Phoenix.dir/DependInfo.cmake"
+  "Projects/PhoenixApp/CMakeFiles/PhoenixApp.dir/DependInfo.cmake"
   "Projects/Gryphon/CMakeFiles/GryphonEngine.dir/DependInfo.cmake"
   )

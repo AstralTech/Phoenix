@@ -40,7 +40,7 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "/home/gregory/Projects/Applications/PhoenixEditor/build/CMakeFiles/cmake.verify_globs")
 endif()
 
-# SOURCE_FILES at CMakeLists.txt:5 (file)
+# SOURCE_FILES at Projects/PhoenixApp/CMakeLists.txt:1 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/gregory/Projects/Applications/PhoenixEditor/Projects/PhoenixApp/src/*.cpp")
 set(OLD_GLOB
   "/home/gregory/Projects/Applications/PhoenixEditor/Projects/PhoenixApp/src/main.cpp"
@@ -51,7 +51,7 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "/home/gregory/Projects/Applications/PhoenixEditor/build/CMakeFiles/cmake.verify_globs")
 endif()
 
-# SOURCE_FILES at CMakeLists.txt:5 (file)
+# SOURCE_FILES at Projects/PhoenixApp/CMakeLists.txt:1 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/gregory/Projects/Applications/PhoenixEditor/Projects/PhoenixApp/src/*.h")
 set(OLD_GLOB
   "/home/gregory/Projects/Applications/PhoenixEditor/Projects/PhoenixApp/src/Phoenix.h"

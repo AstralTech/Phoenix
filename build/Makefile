@@ -118,17 +118,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Phoenix
+# Target rules for targets named PhoenixApp
 
 # Build rule for target.
-Phoenix: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Phoenix
-.PHONY : Phoenix
+PhoenixApp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 PhoenixApp
+.PHONY : PhoenixApp
 
 # fast build rule for target.
-Phoenix/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Phoenix.dir/build.make CMakeFiles/Phoenix.dir/build
-.PHONY : Phoenix/fast
+PhoenixApp/fast:
+	$(MAKE) $(MAKESILENT) -f Projects/PhoenixApp/CMakeFiles/PhoenixApp.dir/build.make Projects/PhoenixApp/CMakeFiles/PhoenixApp.dir/build
+.PHONY : PhoenixApp/fast
 
 #=============================================================================
 # Target rules for targets named GryphonEngine
@@ -143,54 +143,6 @@ GryphonEngine/fast:
 	$(MAKE) $(MAKESILENT) -f Projects/Gryphon/CMakeFiles/GryphonEngine.dir/build.make Projects/Gryphon/CMakeFiles/GryphonEngine.dir/build
 .PHONY : GryphonEngine/fast
 
-Projects/PhoenixApp/src/main.o: Projects/PhoenixApp/src/main.cpp.o
-.PHONY : Projects/PhoenixApp/src/main.o
-
-# target to build an object file
-Projects/PhoenixApp/src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Phoenix.dir/build.make CMakeFiles/Phoenix.dir/Projects/PhoenixApp/src/main.cpp.o
-.PHONY : Projects/PhoenixApp/src/main.cpp.o
-
-Projects/PhoenixApp/src/main.i: Projects/PhoenixApp/src/main.cpp.i
-.PHONY : Projects/PhoenixApp/src/main.i
-
-# target to preprocess a source file
-Projects/PhoenixApp/src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Phoenix.dir/build.make CMakeFiles/Phoenix.dir/Projects/PhoenixApp/src/main.cpp.i
-.PHONY : Projects/PhoenixApp/src/main.cpp.i
-
-Projects/PhoenixApp/src/main.s: Projects/PhoenixApp/src/main.cpp.s
-.PHONY : Projects/PhoenixApp/src/main.s
-
-# target to generate assembly for a file
-Projects/PhoenixApp/src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Phoenix.dir/build.make CMakeFiles/Phoenix.dir/Projects/PhoenixApp/src/main.cpp.s
-.PHONY : Projects/PhoenixApp/src/main.cpp.s
-
-Projects/PhoenixApp/src/main/PhoenixApplication.o: Projects/PhoenixApp/src/main/PhoenixApplication.cpp.o
-.PHONY : Projects/PhoenixApp/src/main/PhoenixApplication.o
-
-# target to build an object file
-Projects/PhoenixApp/src/main/PhoenixApplication.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Phoenix.dir/build.make CMakeFiles/Phoenix.dir/Projects/PhoenixApp/src/main/PhoenixApplication.cpp.o
-.PHONY : Projects/PhoenixApp/src/main/PhoenixApplication.cpp.o
-
-Projects/PhoenixApp/src/main/PhoenixApplication.i: Projects/PhoenixApp/src/main/PhoenixApplication.cpp.i
-.PHONY : Projects/PhoenixApp/src/main/PhoenixApplication.i
-
-# target to preprocess a source file
-Projects/PhoenixApp/src/main/PhoenixApplication.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Phoenix.dir/build.make CMakeFiles/Phoenix.dir/Projects/PhoenixApp/src/main/PhoenixApplication.cpp.i
-.PHONY : Projects/PhoenixApp/src/main/PhoenixApplication.cpp.i
-
-Projects/PhoenixApp/src/main/PhoenixApplication.s: Projects/PhoenixApp/src/main/PhoenixApplication.cpp.s
-.PHONY : Projects/PhoenixApp/src/main/PhoenixApplication.s
-
-# target to generate assembly for a file
-Projects/PhoenixApp/src/main/PhoenixApplication.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Phoenix.dir/build.make CMakeFiles/Phoenix.dir/Projects/PhoenixApp/src/main/PhoenixApplication.cpp.s
-.PHONY : Projects/PhoenixApp/src/main/PhoenixApplication.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -200,13 +152,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... GryphonEngine"
-	@echo "... Phoenix"
-	@echo "... Projects/PhoenixApp/src/main.o"
-	@echo "... Projects/PhoenixApp/src/main.i"
-	@echo "... Projects/PhoenixApp/src/main.s"
-	@echo "... Projects/PhoenixApp/src/main/PhoenixApplication.o"
-	@echo "... Projects/PhoenixApp/src/main/PhoenixApplication.i"
-	@echo "... Projects/PhoenixApp/src/main/PhoenixApplication.s"
+	@echo "... PhoenixApp"
 .PHONY : help
 
 
