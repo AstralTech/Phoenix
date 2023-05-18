@@ -9,7 +9,7 @@ namespace Phoenix {
         renderingGroup = new Engine::ExecutionGroup(); 
 
         windowingSystem = new Engine::WindowingSystem();
-        PhoenixWindow = new Engine::WindowObject("Phoenix Text Editor [v0.01][x86][Linux]", Int2(1920, 1080));
+        PhoenixWindow = new Engine::WindowObject("Phoenix Text Editor [v0.02][x86][Linux]", Int2(1920, 1080));
         windowingSystem->OpenMainWindow(PhoenixWindow);
 
         renderingSystem = new Engine::RenderingSystem();

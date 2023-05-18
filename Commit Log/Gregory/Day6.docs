@@ -1,7 +1,9 @@
 [ Things I did today ]
 - Redid the CMake organization
-    - Engine Project -> shared library
+    - Engine Project -> Static Library
     - Phoenix App -> Executable
+- Worked on the Event System
+    - I got a lot of the backend of the event system working
 
 [ Things I did not finish today ]
 - Get more then just OpenGL 1.1 working

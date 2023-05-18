@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/PhoenixApp.dir/src/main.cpp.o CMakeFiles/PhoenixApp.dir/src/main/PhoenixApplication.cpp.o -o PhoenixApp  ../Gryphon/libGryphonEngine.a -lGL -ldl -lX11 
