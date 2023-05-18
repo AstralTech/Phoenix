@@ -4,6 +4,7 @@
 #define WAYLAND 1
 
 #include "Windowing/LinuxPlatformWindow.h"
+#include "../../Renderers/Renderer.h"
 
 namespace Engine {
     class Platform {

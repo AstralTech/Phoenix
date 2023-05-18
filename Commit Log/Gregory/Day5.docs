@@ -1,0 +1,28 @@
+[ Things I did today ]
+- Fixed Bugs
+    - Fixed the bug where the whole application crashes with some wierd X11 errors on start
+    - Fixed the bug where after the first window opens it gets bored and doesnt open the second one
+    - These were both caused because I was not calling XInitThreads
+
+[ Things I did not finish today ]
+- Seperate CMake compilations for both the Engine and Application
+    - I just didnt fell this was neccesary yet but I should do this soon
+- Anything to do with OpenGL and GLAD
+    - I tried but I dont know how to intilize a glad context
+
+[ Things im doing tommorow ]
+- Get more then just OpenGL 1.1 working
+    - I already have glad in the project idk if you noticed but it also takes up about 95.7% of the code right now
+- Cleaning up the context creation
+    - Im making this more modular and taking most of it out of LinuxPlatformWindow.h
+- Designing the API for creating and drawing Render buffers
+    - I like to map out APIs first so im going to do that before I jump into the whole render buffers crap
+
+[ Things I would love to do tommorow ]
+
+[ Bugs that I am aware of ]
+- When you close an Auxiliary window X11 seg faults
+
+[ Goals for tommorow ]
+- Code for atleast 1 hour
+- Get to 850 lines of code

@@ -13,6 +13,9 @@ namespace Phoenix {
         Engine::RenderingSystem* renderingSystem;
         Engine::WindowingSystem* windowingSystem;
         Engine::EventSystem* eventSystem;
+
+        // Application Types
+        Engine::WindowObject* PhoenixWindow;
     public:
         PhoenixApplication() {}
     public:

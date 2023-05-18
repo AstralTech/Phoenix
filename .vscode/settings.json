@@ -15,6 +15,8 @@
         "cstdint": "cpp",
         "cstdio": "cpp",
         "cstdlib": "cpp",
+        "cstring": "cpp",
+        "ctime": "cpp",
         "cwchar": "cpp",
         "cwctype": "cpp",
         "deque": "cpp",
@@ -29,6 +31,7 @@
         "memory_resource": "cpp",
         "numeric": "cpp",
         "random": "cpp",
+        "ratio": "cpp",
         "string_view": "cpp",
         "system_error": "cpp",
         "tuple": "cpp",
@@ -42,15 +45,12 @@
         "new": "cpp",
         "numbers": "cpp",
         "ostream": "cpp",
-        "stdexcept": "cpp",
-        "streambuf": "cpp",
-        "typeinfo": "cpp",
-        "ctime": "cpp",
-        "ratio": "cpp",
         "semaphore": "cpp",
+        "stdexcept": "cpp",
         "stop_token": "cpp",
+        "streambuf": "cpp",
         "thread": "cpp",
-        "cstring": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "typeinfo": "cpp"
     }
 }

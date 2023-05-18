@@ -9,12 +9,12 @@ namespace Phoenix {
         renderingGroup = new Engine::ExecutionGroup(); 
 
         windowingSystem = new Engine::WindowingSystem();
-        Engine::WindowObject* PhoenixWindow = new Engine::WindowObject("Phoenix Text Editor [v0.01][x86][Linux]", Int2(1920, 1080));
-        Engine::WindowObject* testWindow = new Engine::WindowObject("This is an amazing test window", Int2(1280, 720));
+        PhoenixWindow = new Engine::WindowObject("Phoenix Text Editor [v0.01][x86][Linux]", Int2(1920, 1080));
         windowingSystem->OpenMainWindow(PhoenixWindow);
-        windowingSystem->OpenAuxiliaryWindow(testWindow);
 
         renderingSystem = new Engine::RenderingSystem();
+
+        //Engine::RenderBuffer* TestRenderBuffer1 = Engine::RenderBuffer(Int2(100, 100));
 
         renderingGroup->BindSystem(windowingSystem);
         renderingGroup->BindSystem(renderingSystem);
