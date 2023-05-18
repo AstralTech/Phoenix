@@ -1,0 +1,2 @@
+/usr/bin/ar qc libGryphonEngine.a CMakeFiles/GryphonEngine.dir/src/Core/Threading/Systems/EventSystem/EventSystem.cpp.o CMakeFiles/GryphonEngine.dir/src/Core/Threading/Systems/RenderingSystem/RenderingSystem.cpp.o CMakeFiles/GryphonEngine.dir/src/Core/Threading/Systems/WindowingSystem/WindowingSystem.cpp.o CMakeFiles/GryphonEngine.dir/src/Core/Threading/Thread.cpp.o CMakeFiles/GryphonEngine.dir/__/__/Depends/GLAD/src/glad.c.o
+/usr/bin/ranlib libGryphonEngine.a

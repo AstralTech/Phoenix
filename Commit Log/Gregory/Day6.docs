@@ -1,0 +1,23 @@
+[ Things I did today ]
+- Redid the CMake organization
+    - Engine Project -> shared library
+    - Phoenix App -> Executable
+
+[ Things I did not finish today ]
+- Get more then just OpenGL 1.1 working
+    - I did event crap
+- Cleaning up the context creation
+    - I did event crap
+- Designing the API for creating and drawing Render buffers
+    - I did event crap
+
+[ Things im doing tommorow ]
+
+[ Things I would love to do tommorow ]
+
+[ Bugs that I am aware of ]
+- When you close an Auxiliary window X11 seg faults
+
+[ Goals for tommorow ]
+- Code for atleast 1 hour
+- Get to 1000 lines of code

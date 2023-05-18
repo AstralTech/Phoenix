@@ -1,0 +1,6 @@
+/home/gregory/Projects/Applications/PhoenixEditor/build/CMakeFiles/Phoenix.dir
+/home/gregory/Projects/Applications/PhoenixEditor/build/CMakeFiles/edit_cache.dir
+/home/gregory/Projects/Applications/PhoenixEditor/build/CMakeFiles/rebuild_cache.dir
+/home/gregory/Projects/Applications/PhoenixEditor/build/Projects/Gryphon/CMakeFiles/GryphonEngine.dir
+/home/gregory/Projects/Applications/PhoenixEditor/build/Projects/Gryphon/CMakeFiles/edit_cache.dir
+/home/gregory/Projects/Applications/PhoenixEditor/build/Projects/Gryphon/CMakeFiles/rebuild_cache.dir
