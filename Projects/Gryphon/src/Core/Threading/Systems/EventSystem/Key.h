@@ -1,10 +1,7 @@
 #pragma once
 
 namespace Engine {
-    using KeyCode = uint16_t;
-
-    enum : KeyCode
-		{
+    enum class KeyCode {
 			// From glfw3.h
 			Space               = 32,
 			Apostrophe          = 39, /* ' */

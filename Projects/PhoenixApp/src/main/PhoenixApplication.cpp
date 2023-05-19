@@ -3,7 +3,7 @@
 
 namespace Phoenix {
     bool PhoenixApplication::OnKeyPressed(Engine::KeyPressedEvent event) {
-        std::cout << "WE HAVE INPUT BOYS";
+
         return true;
     }
 
@@ -29,7 +29,7 @@ namespace Phoenix {
         eventGroup = new Engine::ExecutionGroup();
         eventSystem = new Engine::EventSystem();
 
-        // eventSystem->RegisterEvent<Engine::KeyPressedEvent>(GRYPHON_FUNC(OnKeyPressed));
+        eventSystem->RegisterEvent<Engine::KeyPressedEvent>(GRYPHON_FUNC(PhoenixApplication::OnKeyPressed));
 
         eventGroup->BindSystem(eventSystem);
 
@@ -45,7 +45,7 @@ namespace Phoenix {
         if (windowingSystem->WindowsClosed())
             EndApp();
 
-        //eventSystem->ProcessEvent<Engine::Event::Type::KeyPressed>(Engine::KeyPressedEvent());
+        eventSystem->ProcessEvent<Engine::KeyPressedEvent>(Engine::KeyPressedEvent(Engine::KeyCode::W));
     }
 
     void PhoenixApplication::CloseApp() {
