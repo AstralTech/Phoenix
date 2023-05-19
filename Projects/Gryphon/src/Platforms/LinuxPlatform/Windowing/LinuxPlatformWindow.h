@@ -36,7 +36,7 @@ namespace Engine {
         XVisualInfo* visual;
     public:
         void CreateContext () {
-            #ifdef GRYPHON_RENDERER == OPENGL
+            #if (GRYPHON_RENDERER == OPENGL)
                        	GLint glxAttribs[] = {
                             GLX_X_RENDERABLE    , True,
                             GLX_DRAWABLE_TYPE   , GLX_WINDOW_BIT,

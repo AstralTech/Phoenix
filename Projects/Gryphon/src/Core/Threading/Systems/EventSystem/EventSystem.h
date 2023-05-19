@@ -1,20 +1,35 @@
 #pragma once
-#include "../../ExecutionManager.h"
 #include "vector"
+#include <functional>
 
-#include "Key.h"
+#include "../../ExecutionManager.h"
 
-// I know i wrote that i did crap on this but lets be honest i did not
+#include "Event.h"
+#include "EventTypes/ApplicationEvent.h"
+#include "EventTypes/KeyEvent.h"
+#include "EventTypes/MouseEvent.h"
+
+// #define GRYPHON_FUNC(function) std::bind(print_num, 31337);
 
 namespace Engine {
-    class PlatformWindow;
+
+    class RegisteredEvent {
+    public:
+        Event::Type event_type;
+        std::function<bool(Event)> event_function;  
+    };
 
     class EventSystem : public ExecutionSystem {
-    private:
-        std::vector<Key> keysDown;
+    public:
+    
     public:
         virtual void OnStart()override;
         virtual void OnUpdate() override;
         virtual void OnEnd() override;
+    public:
+        // template <typename Type>
+        // void RegisterEvent(std::function<bool()> on_function) {
+        //     on_function(KeyPressedEvent());
+        // }
     };
 }

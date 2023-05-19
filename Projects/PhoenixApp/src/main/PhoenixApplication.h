@@ -22,5 +22,7 @@ namespace Phoenix {
         virtual void RunApp() override;
         virtual void UpdateApp() override;
         virtual void CloseApp() override;
+
+        bool OnKeyPressed(Engine::KeyPressedEvent event);
     };
 }

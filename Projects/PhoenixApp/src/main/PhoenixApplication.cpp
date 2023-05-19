@@ -2,6 +2,11 @@
 #include "iostream"
 
 namespace Phoenix {
+    bool PhoenixApplication::OnKeyPressed(Engine::KeyPressedEvent event) {
+        std::cout << "WE HAVE INPUT BOYS";
+        return true;
+    }
+
     void PhoenixApplication::RunApp() {
         std::cout << "Welcome to the Phoenix Text editor if your window does not open shortly then I have zero clue what is going on plese report this bug <3\n";
 
@@ -24,6 +29,8 @@ namespace Phoenix {
         eventGroup = new Engine::ExecutionGroup();
         eventSystem = new Engine::EventSystem();
 
+        // eventSystem->RegisterEvent<Engine::KeyPressedEvent>(GRYPHON_FUNC(OnKeyPressed));
+
         eventGroup->BindSystem(eventSystem);
 
         // Create the execution manager
@@ -37,6 +44,8 @@ namespace Phoenix {
     void PhoenixApplication::UpdateApp() {
         if (windowingSystem->WindowsClosed())
             EndApp();
+
+        //eventSystem->ProcessEvent<Engine::Event::Type::KeyPressed>(Engine::KeyPressedEvent());
     }
 
     void PhoenixApplication::CloseApp() {
