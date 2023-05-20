@@ -5,6 +5,7 @@
 #include <X11/keysymdef.h>
 
 
+#include "vector"
 #include "iostream"
 #include <cstring>
 
@@ -23,9 +24,11 @@ static bool isExtensionSupported(const char *extList, const char *extension) {
 
 
 #include "../../../Renderers/Renderer.h"
-
+#include "../../../Core/Threading/Systems/EventSystem/EventSystem.h"
 
 namespace Engine {
+    class PlatformWindow;
+
     class PlatformWindowManager {
     public:
         Display* display;
@@ -34,6 +37,8 @@ namespace Engine {
         GLXContext context;
 
         XVisualInfo* visual;
+
+        std::vector<Event*> events = {};
     public:
         void CreateContext () {
             #if (GRYPHON_RENDERER == OPENGL)
@@ -133,6 +138,19 @@ namespace Engine {
 
             CreateContext();
         }
+
+        template <typename T>
+        void SubmitEvent(T EventData) {
+            events.push_back(&EventData);
+        }
+
+        std::vector<Event*> ReadEvents() {
+            return events;
+        }
+
+        void ClearEvents() {
+            events = {};
+        }
     };
 
     class PlatformWindow {
@@ -196,14 +214,18 @@ namespace Engine {
         void ManageWindowEvents() {
             if (isClosed)
                 return;
-            
-
             XNextEvent(platformWindowManager->display, &ev);
 
             Window evWindow = ev.xany.window;
 
             if (ev.type == Expose) {
                 XClearWindow(platformWindowManager->display, evWindow);
+            }
+            if (ev.type == KeyPress) {
+                platformWindowManager->SubmitEvent<KeyPressedEvent>(KeyPressedEvent(Engine::KeyCode::A));
+            }
+            if (ev.type == KeyRelease) {
+                platformWindowManager->SubmitEvent<KeyReleasedEvent>(KeyReleasedEvent(Engine::KeyCode::A));
             }
             if (ev.type == ClientMessage) {
 				XDestroyWindow(platformWindowManager->display, evWindow);

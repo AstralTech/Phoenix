@@ -7,6 +7,8 @@
 #include "../../../../Platforms/Platform.h"
 
 namespace Engine {
+    class EventSystem;
+
     struct WindowingWindow {
     public:
         WindowObject* windowObject;
@@ -36,6 +38,7 @@ namespace Engine {
 
 
         PlatformWindowManager* windowManager;
+        EventSystem* eventSystem;
     public:
         WindowingWindow* OpenAuxiliaryWindow(WindowObject* window) { 
             WindowingWindow* win = new WindowingWindow(window);
@@ -46,8 +49,12 @@ namespace Engine {
             mainWindow = OpenAuxiliaryWindow(window);
         }
 
+        void SetEventManager(EventSystem* EventSystem) { eventSystem = EventSystem; }
+
         void OpenWindowingWindow(WindowingWindow* window);
         void OpenWindowingWindows();
+
+        void ReadWindowEvents();
 
         bool WindowsClosed() { 
             if (mainWindow->platformWindow)

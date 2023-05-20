@@ -3,7 +3,7 @@
 
 namespace Phoenix {
     bool PhoenixApplication::OnKeyPressed(Engine::KeyPressedEvent event) {
-
+        std::cout << "WE HAVE INPUT BOYS";
         return true;
     }
 
@@ -33,6 +33,8 @@ namespace Phoenix {
 
         eventGroup->BindSystem(eventSystem);
 
+        windowingSystem->SetEventManager(eventSystem);
+
         // Create the execution manager
         executionManager = new Engine::ExecutionManager();
         executionManager->BindGroup(renderingGroup);
@@ -45,7 +47,7 @@ namespace Phoenix {
         if (windowingSystem->WindowsClosed())
             EndApp();
 
-        eventSystem->ProcessEvent<Engine::KeyPressedEvent>(Engine::KeyPressedEvent(Engine::KeyCode::W));
+        //eventSystem->ProcessEvent<Engine::KeyPressedEvent>(Engine::KeyPressedEvent(Engine::KeyCode));
     }
 
     void PhoenixApplication::CloseApp() {

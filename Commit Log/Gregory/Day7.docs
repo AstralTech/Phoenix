@@ -1,15 +1,18 @@
 [ Things I did today ]
 - Finished the Event system
     - I added in the system for creating and process event functions
+- Started the integration with the Windowing system
+    - The windowing system can now submit Key Pressed events to the window manager and im hoping to get the rest done tommorow
 
 [ Things I did not finish today ]
-
+- Nothing i did all i wanted to do today
 
 [ Things im doing tommorow ]
-
+- Finish the Windowing system and Event system integration
+    - I just need to work out a better solution then what i have now i have some ideas
 
 [ Things I would love to do tommorow ]
-
+- I dont have many goals for tommorow i have some big plans and will not have much time to work
 
 [ Bugs that I am aware of ]
 - When you close an Auxiliary window X11 seg faults
