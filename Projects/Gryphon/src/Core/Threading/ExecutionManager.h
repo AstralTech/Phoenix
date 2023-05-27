@@ -1,6 +1,9 @@
 #pragma once
 #include "vector"
 #include "thread"
+#include <chrono>
+#include "iostream"
+#include <unistd.h>
 
 namespace Engine {
     class ExecutionThread {
@@ -9,7 +12,9 @@ namespace Engine {
     public:
         bool IsRunning = true;
     public:
-        ExecutionThread() {}
+        ExecutionThread() {
+
+        }
         template <typename T>
         ExecutionThread(T thread) {
             internal = std::thread(thread);
@@ -135,6 +140,7 @@ namespace Engine {
                 for (int i = 0; i < executionGroups.size(); i++) {
                     RunExecutionGroup(executionGroups[i]);
                 }
+                usleep(1000);
             }
         }
 

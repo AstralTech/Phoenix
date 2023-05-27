@@ -14,20 +14,11 @@ namespace Engine {
         WindowObject* windowObject;
         PlatformWindow* platformWindow;
         bool Opened = false;
-
-        ExecutionThread* EventThread;
     public:
         bool IsClosed() { return platformWindow->IsClosed(); }
 
         WindowingWindow(WindowObject* object) {
             this->windowObject = object;
-        }
-
-        void HandleEvents() {
-            while (true) {
-                if (Opened)
-                    platformWindow->ManageWindowEvents();
-            }
         }
     };
 
@@ -36,6 +27,7 @@ namespace Engine {
         std::vector<WindowingWindow*> windows = {};
         WindowingWindow* mainWindow;
 
+        //ExecutionThread* eventThread;
 
         PlatformWindowManager* windowManager;
         EventSystem* eventSystem;

@@ -2,11 +2,6 @@
 
 #include "Settings.h"
 
-#define OPENGL 0
-#define VULKAN 1
-#define DIRECTX 2
-#define METAL 3
-
 #if (GRYPHON_RENDERER == OPENGL)
 #include "OpenGL/OpenGL.h"
 #elif (GRYPHON_RENDERER == VULKAN) 
