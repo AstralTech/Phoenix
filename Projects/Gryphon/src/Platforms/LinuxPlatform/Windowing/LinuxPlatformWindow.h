@@ -10,10 +10,11 @@
 #include <cstring>
 
 #if (GRYPHON_RENDERER == OPENGL)
-// #include <glad/glad.h>
 
-#include <GL/gl.h>
-#include <GL/glx.h>
+#define GLEW_STATIC
+
+#include <glew/glew.h>
+#include "GL/glx.h"
 
 typedef GLXContext (*glXCreateContextAttribsARBProc)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
 
@@ -39,6 +40,10 @@ namespace Engine {
         XVisualInfo* visual;
 
         std::vector<Event*> events = {};
+
+        bool first_window = false;
+
+        glXCreateContextAttribsARBProc glXCreateContextAttribsARB = 0;
     public:
         void CreateContext () {
             #if (GRYPHON_RENDERER == OPENGL)
@@ -85,9 +90,9 @@ namespace Engine {
                         visual = glXGetVisualFromFBConfig( display, bestFbc );
 
                     // Create GLX OpenGL context
-                    glXCreateContextAttribsARBProc glXCreateContextAttribsARB = 0;
                     glXCreateContextAttribsARB = (glXCreateContextAttribsARBProc) glXGetProcAddressARB( (const GLubyte *) "glXCreateContextAttribsARB" );
-                    
+
+
                     int context_attribs[] = {
                         GLX_CONTEXT_MAJOR_VERSION_ARB, 3,
                         GLX_CONTEXT_MINOR_VERSION_ARB, 2,
@@ -105,7 +110,7 @@ namespace Engine {
                         context = glXCreateContextAttribsARB( display, bestFbc, 0, true, context_attribs );
                     }
 
-                    XSync( display, False );
+                XSync( display, False );
                 #else
                 visual = new XVisualInfo();
                 visual->depth = DefaultDepthOfScreen(screenId);
@@ -127,13 +132,7 @@ namespace Engine {
             screenId = DefaultScreen(display);
             
             #if (GRYPHON_RENDERER == OPENGL)
-            
-            // glXCreateContextAttribsARBProc glXCreateContextAttribsARB = 0;
-            // glXCreateContextAttribsARB = (glXCreateContextAttribsARBProc) glXGetProcAddressARB( (const GLubyte *) "glXCreateContextAttribsARB" );
 
-            // if (!gladLoadGLLoader((GLADloadproc)glXCreateContextAttribsARBProc)) {
-            //     std::cout << "Failed to initialize GLAD" << std::endl;
-            // }
             #endif
 
             CreateContext();
@@ -150,6 +149,15 @@ namespace Engine {
 
         void ClearEvents() {
             events = {};
+        }
+
+        void RegisterWindow(Window window) {
+            glXMakeCurrent(display, window, context);
+
+            GLenum err = glewInit();
+            if (GLEW_OK != err){
+                std::cout << glewGetErrorString(err);
+            }
         }
     };
 
@@ -195,6 +203,8 @@ namespace Engine {
             // Show the window
             XClearWindow(platformWindowManager->display, window);
             XMapRaised(platformWindowManager->display, window);
+
+            platformWindowManager->RegisterWindow(window);
         }
 
         void UpdatePlatformWindow() {
@@ -204,7 +214,7 @@ namespace Engine {
             #if (GRYPHON_RENDERER == OPENGL) 
             glXMakeCurrent(platformWindowManager->display, window, platformWindowManager->context);
 
-            glClearColor(1.0, 1.0, 1.0, 1.0);
+            glClearColor(0.0, 0.0, 0.0, 1.0);
             glClear(GL_COLOR_BUFFER_BIT);
 
             glXSwapBuffers(platformWindowManager->display, window);

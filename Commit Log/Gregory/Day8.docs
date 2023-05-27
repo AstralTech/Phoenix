@@ -1,0 +1,31 @@
+[ Things I did today ]
+- Switched from Glad to Glew
+    - I had been using Glad because I heard it was better but I could not get it to work for the life of me soo its gone
+- Got an OpenGL 4.6 context working
+    - After switching from Glad to Glew which I dont think was the problem but ive used glew before I got it to work
+- Added in a lot more multidata types and added in union extensions for them
+    - I expanded from just Int2 and Float2 with more functionality
+    - SameData 2, 3, and 4
+    - DiffData 2, 3, and 4
+    - I also made it so you can use {.xy, .ab} {.xyz, .rgb} {.xyzw, .rgba} for extensions (had to learn how unions worked)
+- Made it so windows can accept a Mouse KeyReleasedEvent
+    - The windows were just spitting out annoying messages when you pressed a key so i made that stop
+- Designed the API and started implementing Render Buffers
+    - I have already explained this system so go find that I guess
+
+[ Things I did not finish today ]
+- Nothing
+
+[ Things im doing tommorow ]
+- Actually start some real rendering
+    - Its been a long time coming but I can actually get some real rendering to happen in OpenGL
+
+[ Things I would love to do tommorow ]
+- I dont have many goals for tommorow i have some big plans and will not have much time to work
+
+[ Bugs that I am aware of ]
+- When you close an Auxiliary window X11 seg faults
+- Rarely you just cant close a window the the X button (This had only happend once could be something else I did wrong)
+
+[ Goals for tommorow ]
+- get to 1800 lines of code
