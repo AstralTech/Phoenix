@@ -214,7 +214,7 @@ namespace Engine {
             #if (GRYPHON_RENDERER == OPENGL) 
             glXMakeCurrent(platformWindowManager->display, window, platformWindowManager->context);
 
-            glClearColor(1.0, 1.0, 1.0, 1.0);
+            glClearColor(0.0, 0.0, 0.0, 1.0);
             glClear(GL_COLOR_BUFFER_BIT);
 
             glXSwapBuffers(platformWindowManager->display, window);

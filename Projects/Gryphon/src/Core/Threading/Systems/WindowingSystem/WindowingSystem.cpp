@@ -37,6 +37,10 @@ namespace Engine {
                 KeyPressedEvent* event = dynamic_cast<KeyPressedEvent*>(events[i]);
 
                 eventSystem->ProcessEvent<KeyPressedEvent>(*event);
+            } else if (events[i]->GetType() == Event::Type::KeyReleased) {
+                KeyReleasedEvent* event = dynamic_cast<KeyReleasedEvent*>(events[i]);
+
+                eventSystem->ProcessEvent<KeyReleasedEvent>(*event);
             } else {
                 std::cout << "the window system does not support this window event";
             }

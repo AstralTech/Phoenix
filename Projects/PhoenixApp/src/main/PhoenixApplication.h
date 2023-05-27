@@ -14,6 +14,10 @@ namespace Phoenix {
         Engine::WindowingSystem* windowingSystem;
         Engine::EventSystem* eventSystem;
 
+        // Rendering Types
+        Engine::RenderBuffer* BackgroundRenderingBuffer;
+        Engine::RenderBuffer* TestWindowRenderingBuffer;
+
         // Application Types
         Engine::WindowObject* PhoenixWindow;
     public:
@@ -22,7 +26,5 @@ namespace Phoenix {
         virtual void RunApp() override;
         virtual void UpdateApp() override;
         virtual void CloseApp() override;
-
-        bool OnKeyPressed(Engine::KeyPressedEvent event);
     };
 }
