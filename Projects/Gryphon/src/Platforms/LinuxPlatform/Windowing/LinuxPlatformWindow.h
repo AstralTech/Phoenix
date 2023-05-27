@@ -14,7 +14,7 @@
 #define GLEW_STATIC
 
 #include <glew/glew.h>
-#include <glew/glxew.h>
+#include "GL/glx.h"
 
 typedef GLXContext (*glXCreateContextAttribsARBProc)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
 
@@ -110,7 +110,7 @@ namespace Engine {
                         context = glXCreateContextAttribsARB( display, bestFbc, 0, true, context_attribs );
                     }
 
-                    XSync( display, False );
+                XSync( display, False );
                 #else
                 visual = new XVisualInfo();
                 visual->depth = DefaultDepthOfScreen(screenId);
@@ -149,6 +149,15 @@ namespace Engine {
 
         void ClearEvents() {
             events = {};
+        }
+
+        void RegisterWindow(Window window) {
+            glXMakeCurrent(display, window, context);
+
+            GLenum err = glewInit();
+            if (GLEW_OK != err){
+                std::cout << glewGetErrorString(err);
+            }
         }
     };
 
@@ -194,6 +203,8 @@ namespace Engine {
             // Show the window
             XClearWindow(platformWindowManager->display, window);
             XMapRaised(platformWindowManager->display, window);
+
+            platformWindowManager->RegisterWindow(window);
         }
 
         void UpdatePlatformWindow() {
