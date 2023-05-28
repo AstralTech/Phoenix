@@ -15,8 +15,8 @@ namespace Phoenix {
         Engine::EventSystem* eventSystem;
 
         // Rendering Types
-        Engine::RenderBuffer* BackgroundRenderingBuffer;
-        Engine::RenderBuffer* TestWindowRenderingBuffer;
+        Engine::RenderBuffer* BackgroundRenderingBuffer; // This buffer is for rendering the background like docking indicators
+        Engine::RenderBuffer* WindowsRenderingBuffer; // This is the actuall windows that you can drag around
 
         // Application Types
         Engine::WindowObject* PhoenixWindow;

@@ -33,10 +33,15 @@ namespace Engine {
 
             glXMakeCurrent(display, window->window, context);
 
+            glewExperimental = GL_TRUE;
             GLenum err = glewInit();
             if (GLEW_OK != err){
                 std::cout << glewGetErrorString(err);
+            } else {
+                std::cout << "Glew Initilized Properly\n";
             }
+
+            std::cout << glGetString(GL_VERSION) << std::endl;
     }
 }
 #endif

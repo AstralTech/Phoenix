@@ -3,6 +3,8 @@
 #include "../../../Types/MultiData.h"
 
 namespace Engine {
+
+    
     struct RenderBuffer {
     public:
         Int2 RenderBufferSize;

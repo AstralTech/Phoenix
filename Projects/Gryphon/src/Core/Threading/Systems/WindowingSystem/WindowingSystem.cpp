@@ -2,6 +2,7 @@
 #include "iostream"
 
 #include "../EventSystem/EventSystem.h"
+#include "../RenderingSystem/RenderingSystem.h"
 
 namespace Engine {
     void WindowingSystem::OnStart() {
@@ -29,6 +30,14 @@ namespace Engine {
 
         for (int i = 0; i < windows.size(); i++) {
             windows[i]->platformWindow->UpdatePlatformWindow();
+
+            windows[i]->platformWindow->StartWindowDraw();
+
+            for (int k = 0; k < windows[i]->windowObject->render_buffers.size(); k++) {
+                renderingSystem->DrawRenderBuffer(windows[i]->windowObject->render_buffers[i]);
+            }
+
+            windows[i]->platformWindow->EndWindowDraw();
         }
     }
 
@@ -56,7 +65,24 @@ namespace Engine {
     }
 
     void WindowingSystem::OnUpdate() {
+        if (!renderingSystem)
+            renderingSystem = GetExecutionSystem<RenderingSystem>();
+
         OpenWindowingWindows();
         ReadWindowEvents();
+    }
+
+    void WindowingSystem::DrawToWindow(WindowObject* window_to_draw, RenderBuffer* render_buffer, RenderBufferType render_buffer_type, Int2 position) {
+        WindowingWindow* window = 0;
+        for (int i = 0; i < windows.size(); i++) {
+            if (windows[i]->windowObject == window_to_draw) {
+                window = windows[i];
+                break;
+            }
+        }
+
+        window->platformWindow->StartWindowDraw();
+
+        window->platformWindow->EndWindowDraw();
     }
 }   

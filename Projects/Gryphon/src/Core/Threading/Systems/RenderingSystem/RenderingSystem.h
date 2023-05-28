@@ -26,6 +26,8 @@ namespace Engine {
     public:
         void RegisterBuffer(RenderBuffer* renderBuffer);
 
+        void DrawRenderBuffer(RenderBuffer* renderBuffer);
+
         virtual void OnStart()override;
         virtual void OnUpdate() override;
         virtual void OnEnd() override;

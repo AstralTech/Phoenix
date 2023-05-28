@@ -11,9 +11,7 @@
 
 #if (GRYPHON_RENDERER == OPENGL)
 
-#define GLEW_STATIC
-
-#include <glew/glew.h>
+#include <GL/glew.h>
 #include "GL/glx.h"
 
 typedef GLXContext (*glXCreateContextAttribsARBProc)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
@@ -205,14 +203,16 @@ namespace Engine {
             if (IsClosed())
                 return;
 
-            #if (GRYPHON_RENDERER == OPENGL) 
             glXMakeCurrent(platformWindowManager->display, window, platformWindowManager->context);
+        }
 
-            glClearColor(0.0, 0.0, 0.0, 1.0);
+        void StartWindowDraw() {
+            glClearColor(0, 0, 0, 1.0);
             glClear(GL_COLOR_BUFFER_BIT);
+        }
 
+        void EndWindowDraw() {
             glXSwapBuffers(platformWindowManager->display, window);
-            #endif
         }
 
         void ManageWindowEvents(XEvent ev) {
@@ -225,10 +225,10 @@ namespace Engine {
             if (ev.type == KeyRelease) {
                 platformWindowManager->SubmitEvent<KeyReleasedEvent>(KeyReleasedEvent(Engine::KeyCode::A));
             }
-            // if (ev.type == ClientMessage) {
-			// 	XDestroyWindow(platformWindowManager->display, window);
-            //     CloseWindow();
-			// }
+            if (ev.type == ClientMessage) {
+				XDestroyWindow(platformWindowManager->display, window);
+                CloseWindow();
+			}
         }
 
         void CloseWindow() {

@@ -1,0 +1,25 @@
+[ Things I did today ]
+- Moved the Event system back to the main thread
+    - The event system had lived on its own thread per window but I moved it back to the main thread
+- Got a triangle rendering
+    - It is not hard I just didnt realize that I was using the OpenGL core profile so I needed a VAO left me tearing my hair out
+
+[ Things I did not finish today ]
+- Nothing
+
+[ Things im doing tommorow ]
+- Actually start some real rendering
+    - Its been a long time coming but I can actually get some real rendering to happen in OpenGL
+
+[ Things I would love to do tommorow ]
+- I dont have many goals for tommorow i have some big plans and will not have much time to work
+
+[ Bugs I fixed]
+- You just cant close a window
+    - Some issues with how threads were being handeled
+
+[ Bugs that I am aware of ]
+- When you close an Auxiliary window X11 seg faults
+
+[ Goals for tommorow ]
+- get to 1800 lines of code

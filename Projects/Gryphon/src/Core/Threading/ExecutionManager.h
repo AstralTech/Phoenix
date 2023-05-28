@@ -4,6 +4,7 @@
 #include <chrono>
 #include "iostream"
 #include <unistd.h>
+#include "typeinfo"
 
 namespace Engine {
     class ExecutionThread {
@@ -54,6 +55,15 @@ namespace Engine {
         template <typename T, typename Q>
         ExecutionThread* RequestThread(T value, Q function) {
             return currentGroup->CreateThread(value, function);
+        }
+
+        // Warniong this does need to be in the same execution group im lazy and am not going out of group execution systems
+        template <typename T>
+        T* GetExecutionSystem() {
+            for (int i = 0; i < currentGroup->groupedSystems.size(); i++) {
+                if (dynamic_cast<T*>(currentGroup->groupedSystems[i]))
+                    return dynamic_cast<T*>(currentGroup->groupedSystems[i]);
+            }
         }
 
         virtual void OnStart() = 0;

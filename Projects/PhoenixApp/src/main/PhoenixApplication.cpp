@@ -15,10 +15,13 @@ namespace Phoenix {
         renderingSystem = new Engine::RenderingSystem();
 
         BackgroundRenderingBuffer = new Engine::RenderBuffer(Int2(1920, 1080));
-        TestWindowRenderingBuffer = new Engine::RenderBuffer(Int2(200, 300));
+        WindowsRenderingBuffer = new Engine::RenderBuffer(Int2(1920, 1080));
+
+        PhoenixWindow->AddRenderBuffer(BackgroundRenderingBuffer);
+        PhoenixWindow->AddRenderBuffer(WindowsRenderingBuffer);
 
         renderingSystem->RegisterBuffer(BackgroundRenderingBuffer);
-        renderingSystem->RegisterBuffer(TestWindowRenderingBuffer);
+        renderingSystem->RegisterBuffer(WindowsRenderingBuffer);
 
         renderingGroup->BindSystem(windowingSystem);
         renderingGroup->BindSystem(renderingSystem);
@@ -44,17 +47,11 @@ namespace Phoenix {
         if (windowingSystem->WindowsClosed())
             EndApp();
 
-        #if 1 == 0
-        renderingSystem->BindBuffer(BackgroundRenderingBuffer);
-        renderingSystem->Clear(Color(128, 128, 128, 1));
-        
-        windowingSystem->DrawToWindow_Background(PhoenixWindow);
+        // renderingSystem->BindBuffer(BackgroundRenderingBuffer);
+        // renderingSystem->Clear(Color(128, 128, 128, 1));
 
-        renderingSystem->BindBuffer(TestWindowRenderingBuffer);
-        renderingSystem->Clear(Color(255, 0, 0, 1));
-        
-        windowingSystem->DrawToWindow_Object(PhoenixWindow, Int2(100, 100));
-        #endif
+        // renderingSystem->BindBuffer(WindowsRenderingBuffer);
+        // renderingSystem->Clear(Color(255, 0, 0, 1));
     }
 
     void PhoenixApplication::CloseApp() {

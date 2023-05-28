@@ -8,6 +8,13 @@
 
 namespace Engine {
     class EventSystem;
+    class RenderingSystem;
+
+    struct RenderBuffer;
+    
+    enum RenderBufferType {
+        Background, Object
+    };
 
     struct WindowingWindow {
     public:
@@ -28,6 +35,8 @@ namespace Engine {
         WindowingWindow* mainWindow;
 
         //ExecutionThread* eventThread;
+
+        RenderingSystem* renderingSystem;
 
         PlatformWindowManager* windowManager;
         EventSystem* eventSystem;
@@ -54,6 +63,8 @@ namespace Engine {
             else 
                 return false; 
         }
+
+        void DrawToWindow(WindowObject* window_to_draw, RenderBuffer* render_buffer, RenderBufferType render_buffer_type, Int2 position = Int2(0));
 
         virtual void OnStart()override;
         virtual void OnUpdate() override;
