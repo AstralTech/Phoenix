@@ -3,13 +3,15 @@
     - The event system had lived on its own thread per window but I moved it back to the main thread
 - Got a triangle rendering
     - It is not hard I just didnt realize that I was using the OpenGL core profile so I needed a VAO left me tearing my hair out
+- Basic Frame buffers
+    - I got some OpenGL frame buffers working even though they require some more work
 
 [ Things I did not finish today ]
 - Nothing
 
 [ Things im doing tommorow ]
-- Actually start some real rendering
-    - Its been a long time coming but I can actually get some real rendering to happen in OpenGL
+- Finish the frame buffer implementation
+    - I just copied the LearnOpenGL.com frame buffer implementation so I need to improve it tommorow with a lot more settings
 
 [ Things I would love to do tommorow ]
 - I dont have many goals for tommorow i have some big plans and will not have much time to work

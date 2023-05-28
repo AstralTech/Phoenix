@@ -27,8 +27,7 @@ namespace Engine {
 
         return id;
     }
-
-   static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader) {
+    static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader) {
         unsigned int program = glCreateProgram();
         unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
         unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
@@ -44,6 +43,59 @@ namespace Engine {
         return program;
    } 
 
+    struct PlatformRenderBuffer {
+    public:
+        unsigned int framebuffer;
+        unsigned int textureColorbuffer;
+    public:
+        PlatformRenderBuffer(RenderBuffer* buffer) {
+            glGenFramebuffers(1, &framebuffer);
+            glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);    
+
+            // generate texture
+            glGenTextures(1, &textureColorbuffer);
+            glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 800, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glBindTexture(GL_TEXTURE_2D, 0);
+
+            // attach it to currently bound framebuffer object
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0); 
+
+
+            unsigned int rbo;
+            glGenRenderbuffers(1, &rbo);
+            glBindRenderbuffer(GL_RENDERBUFFER, rbo); 
+            glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 800, 600);  
+            glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+            if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+                std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+            else
+                std::cout << "Created a framebuffer\n";
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);  
+        }
+
+        ~PlatformRenderBuffer() {
+            glDeleteFramebuffers(1, &framebuffer); 
+        }
+
+        void Bind() {
+            glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+        }
+
+        void UnBind() {
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        }
+
+        void BindForRendering() {
+            glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
+        }
+    };
+
     class RendererLink {
     public:
         unsigned int vao;
@@ -51,14 +103,14 @@ namespace Engine {
         unsigned int shader;
     public:
         void Init() {
-            float vertex[12] = {
-                -0.5,  0.5,
-                -0.5, -0.5,
-                 0.5, -0.5,
+            float vertex[24] = {
+                -0.5,  0.5, 0.0, 0.0,
+                -0.5, -0.5, 0.0, 1.0,
+                 0.5, -0.5, 1.0, 1.0,
 
-                -0.5,  0.5,
-                 0.5,  0.5,
-                 0.5, -0.5
+                -0.5,  0.5, 0.0, 0.0,
+                 0.5,  0.5, 1.0, 0.0,
+                 0.5, -0.5, 1.0, 1.0
             };
             
             glGenVertexArrays(1, &vao);
@@ -66,18 +118,26 @@ namespace Engine {
 
             glGenBuffers(1, &buffer);
             glBindBuffer(GL_ARRAY_BUFFER, buffer);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 12, vertex, GL_STATIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 24, vertex, GL_STATIC_DRAW);
 
             glEnableVertexAttribArray(0);
-            glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+            glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, 0);
+
+            glEnableVertexAttribArray(1);
+            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (const void*)(sizeof(float) * 2));
 
             std::string vertexShader = R"(
                 #version 330 core
 
-                layout(location = 0) in vec4 position;
+                layout(location = 0) in vec2 position;
+                layout(location = 1) in vec2 texCoord;
+
+                out vec2 vTexCoord;
 
                 void main() {
-                    gl_Position = position;
+                    vTexCoord = texCoord;
+
+                    gl_Position = vec4(position, 0.0, 1.0);
                 }
             )";
 
@@ -86,22 +146,33 @@ namespace Engine {
 
                 layout(location = 0) out vec4 color;
 
+                in vec2 vTexCoord;
+                uniform sampler2D screenTexture;
+
                 void main() {
-                    color = vec4(0.0, 1.0, 0.0, 1.0);
+                    color = texture(screenTexture, vTexCoord);
                 }           
             )";
 
             shader = CreateShader(vertexShader, fragmentShader);
-
-
-            std::cout << "Finished creating shader thingy";
         }
 
 
-        void DrawRenderBuffer(RenderBuffer* buffer) {
+        void DrawRenderBuffer(PlatformRenderBuffer* buffer) {
+            buffer->UnBind();
+            buffer->BindForRendering();
+
             glBindVertexArray(vao);
             glUseProgram(shader);
             glDrawArrays(GL_TRIANGLES, 0, 6);
+
+            //std::cout << "Hello, world";
+        }
+
+        // Renderer Rendering Routines
+        void ClearScreen(float r, float g, float b, float a) {
+            glClearColor(r, g, b, a);
+            glClear(GL_COLOR_BUFFER_BIT);
         }
     };
 }

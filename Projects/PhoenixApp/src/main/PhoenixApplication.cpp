@@ -47,11 +47,19 @@ namespace Phoenix {
         if (windowingSystem->WindowsClosed())
             EndApp();
 
-        // renderingSystem->BindBuffer(BackgroundRenderingBuffer);
-        // renderingSystem->Clear(Color(128, 128, 128, 1));
+        renderingSystem->BeginRendererFrame();
 
-        // renderingSystem->BindBuffer(WindowsRenderingBuffer);
-        // renderingSystem->Clear(Color(255, 0, 0, 1));
+
+
+        renderingSystem->BindRenderBuffer(BackgroundRenderingBuffer);
+        renderingSystem->Clear(Color(255, 0, 0, 1));
+
+        renderingSystem->BindRenderBuffer(WindowsRenderingBuffer);
+        renderingSystem->Clear(Color(0, 255, 0, 1));
+
+
+
+        renderingSystem->EndRendererFrame();
     }
 
     void PhoenixApplication::CloseApp() {
