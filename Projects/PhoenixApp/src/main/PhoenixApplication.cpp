@@ -14,8 +14,8 @@ namespace Phoenix {
 
         renderingSystem = new Engine::RenderingSystem();
 
-        BackgroundRenderingBuffer = new Engine::RenderBuffer(Int2(1920, 1080));
-        WindowsRenderingBuffer = new Engine::RenderBuffer(Int2(1920, 1080));
+        BackgroundRenderingBuffer = new Engine::RenderBuffer(Int2(100, 100));
+        WindowsRenderingBuffer = new Engine::RenderBuffer(Int2(200, 200));
 
         PhoenixWindow->AddRenderBuffer(BackgroundRenderingBuffer);
         PhoenixWindow->AddRenderBuffer(WindowsRenderingBuffer);
@@ -49,15 +49,11 @@ namespace Phoenix {
 
         renderingSystem->BeginRendererFrame();
 
-
-
         renderingSystem->BindRenderBuffer(BackgroundRenderingBuffer);
         renderingSystem->Clear(Color(255, 0, 0, 1));
 
         renderingSystem->BindRenderBuffer(WindowsRenderingBuffer);
         renderingSystem->Clear(Color(0, 255, 0, 1));
-
-
 
         renderingSystem->EndRendererFrame();
     }

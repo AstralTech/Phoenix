@@ -19,6 +19,8 @@ namespace Engine {
 
     }
     void RenderingSystem::OnUpdate() {
+        std::cout << "New Render frame\n";
+
         if (!rendererLink) {
             rendererLink = new RendererLink();
             rendererLink->Init();
@@ -49,7 +51,8 @@ namespace Engine {
 
     void RenderingSystem::Internal_BindRenderBuffer(RenderBuffer* renderBuffer) {
         RenderingRenderBuffer* myRenderingBuffer = GetRenderingRenderBuffer(renderBuffer);
-        myRenderingBuffer->platformRenderBuffer->Bind();
+        rendererLink->BindRenderBuffer(myRenderingBuffer->platformRenderBuffer);
+        //myRenderingBuffer->platformRenderBuffer->Bind();
     }
     void RenderingSystem::Internal_Clear(Color color) {
         rendererLink->ClearScreen(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a);

@@ -34,7 +34,7 @@ namespace Engine {
             windows[i]->platformWindow->StartWindowDraw();
 
             for (int k = 0; k < windows[i]->windowObject->render_buffers.size(); k++) {
-                renderingSystem->DrawRenderBuffer(windows[i]->windowObject->render_buffers[i]);
+                renderingSystem->DrawRenderBuffer(windows[i]->windowObject->render_buffers[k]);
             }
 
             windows[i]->platformWindow->EndWindowDraw();
