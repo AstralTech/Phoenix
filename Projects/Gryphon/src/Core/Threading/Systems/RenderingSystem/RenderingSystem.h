@@ -61,8 +61,14 @@ namespace Engine {
         RenderFrame workingFrame;
 
         bool working_on_render = false;
+
+        std::vector<Mesh*> internal_meshes = {};
     public: 
         // Outward Rendering Routines
+        void BuildMesh(Mesh* mesh) {
+            internal_meshes.push_back(mesh);
+        }
+
         void BindRenderBuffer(RenderBuffer* renderBuffer) {
             RenderCommand bind_buffer_command;
             bind_buffer_command.name = "bind_render_buffer";
@@ -76,6 +82,13 @@ namespace Engine {
             workingFrame.commands.push_back(clear_command);
         }
 
+        void DrawMesh(Mesh* mesh) {
+            RenderCommand draw_mesh_command;
+            draw_mesh_command.name = "draw_mesh";
+            draw_mesh_command.args.push_back(mesh);
+            workingFrame.commands.push_back(draw_mesh_command);
+        }
+
         void BeginRendererFrame() {
             workingFrame = RenderFrame();
         }
@@ -86,7 +99,9 @@ namespace Engine {
         }
     public:
         // Inside Rendering Routines
+        void Internal_BuildMesh(Mesh* mesh); // builds a mesh
         void Internal_BindRenderBuffer(RenderBuffer* renderBuffer); // Binds the buffer for rendering
         void Internal_Clear(Color color); // Clears the current render buffer
+        void Internal_DrawMesh(Mesh* mesh); // Draws a mesh
     };
 }

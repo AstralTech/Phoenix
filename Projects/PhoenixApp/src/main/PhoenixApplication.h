@@ -20,6 +20,7 @@ namespace Phoenix {
 
         // Application Types
         Engine::WindowObject* PhoenixWindow;
+        Engine::Mesh* SquareMesh;
     public:
         PhoenixApplication() {}
     public:

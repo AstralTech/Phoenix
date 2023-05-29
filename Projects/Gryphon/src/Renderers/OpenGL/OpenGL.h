@@ -7,6 +7,8 @@
 
 #include "../../Core/Threading/Systems/RenderingSystem/RenderBuffer.h"
 #include "OpenGLRenderBuffer.h"
+#include "OpenGLMeshBuilder.h"
+#include "OpenGLMesh.h"
 
 namespace Engine {
     static unsigned int CompileShader(unsigned int type, const std::string& source) {
@@ -46,9 +48,11 @@ namespace Engine {
 
     class RendererLink {
     public:
-        unsigned int vao;
-        unsigned int buffer;
-        unsigned int shader;
+        unsigned int FrameBufferVAO;
+        unsigned int FrameBufferVerticies;
+        unsigned int FrameBufferShader;
+
+        unsigned int basic_shader;
 
         unsigned int current_frame_buffer = 0;
     public:
@@ -63,11 +67,11 @@ namespace Engine {
                  1.0, -1.0, 1.0, 1.0
             };
             
-            glGenVertexArrays(1, &vao);
-            glBindVertexArray(vao);
+            glGenVertexArrays(1, &FrameBufferVAO);
+            glBindVertexArray(FrameBufferVAO);
 
-            glGenBuffers(1, &buffer);
-            glBindBuffer(GL_ARRAY_BUFFER, buffer);
+            glGenBuffers(1, &FrameBufferVerticies);
+            glBindBuffer(GL_ARRAY_BUFFER, FrameBufferVerticies);
             glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 24, vertex, GL_STATIC_DRAW);
 
             glEnableVertexAttribArray(0);
@@ -104,7 +108,30 @@ namespace Engine {
                 }           
             )";
 
-            shader = CreateShader(vertexShader, fragmentShader);
+            FrameBufferShader = CreateShader(vertexShader, fragmentShader);
+
+            std::string vertexShader2 = R"(
+                #version 330 core
+
+                layout(location = 0) in vec2 position;
+
+                void main() {
+
+                    gl_Position = vec4(position, 0.0, 1.0);
+                }
+            )";
+
+            std::string fragmentShader2 = R"(
+                #version 330 core
+
+                layout(location = 0) out vec4 color;
+
+                void main() {
+                    color = vec4(1.0, 1.0, 1.0, 1.0);
+                }           
+            )";
+
+            basic_shader = CreateShader(vertexShader2, fragmentShader2);
         }
 
         void BindRenderBuffer(PlatformRenderBuffer* buffer) {
@@ -122,8 +149,8 @@ namespace Engine {
             glEnable(GL_BLEND);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-            glBindVertexArray(vao);
-            glUseProgram(shader);
+            glBindVertexArray(FrameBufferVAO);
+            glUseProgram(FrameBufferShader);
             glDrawArrays(GL_TRIANGLES, 0, 6);
 
             glEnable(GL_DEPTH_TEST);
@@ -137,6 +164,38 @@ namespace Engine {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        }
+
+        void DrawMesh(PlatformMesh mesh) {
+            glBindFramebuffer(GL_FRAMEBUFFER, current_frame_buffer);
+
+            glBindVertexArray(mesh.MeshVAO);
+            glUseProgram(basic_shader);
+            glDrawArrays(GL_TRIANGLES, 0, 3);
+
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        }
+
+        void BuildPlatformMesh(Mesh* mesh) {
+            PlatformMesh new_mesh = PlatformMesh();
+
+            float vertex[6] = {
+                -0.5, -0.5,
+                 0.5, -0.5,
+                 0.0,  0.5
+            };
+            
+            glGenVertexArrays(1, &new_mesh.MeshVAO);
+            glBindVertexArray(new_mesh.MeshVAO);
+
+            glGenBuffers(1, &new_mesh.MeshVBO);
+            glBindBuffer(GL_ARRAY_BUFFER, new_mesh.MeshVBO);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6, vertex, GL_STATIC_DRAW);
+
+            glEnableVertexAttribArray(0);
+            glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+
+            mesh->SetPlatformMesh(new_mesh);
         }
     };
 }

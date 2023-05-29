@@ -41,6 +41,14 @@ namespace Phoenix {
         executionManager->BindGroup(eventGroup);
 
         executionManager->StartExecution();
+
+        // build the meshes
+        SquareMesh = new Engine::Mesh();
+        SquareMesh->SetVertexProperties({ Engine::VertexPropertyType::Float2 });
+        SquareMesh->AddVertex({ Float2(-0.5f, -0.5f) });
+        SquareMesh->AddVertex({ Float2( 0.5f, -0.5f) });
+        SquareMesh->AddVertex({ Float2( 0.0f,  0.5f) });
+        renderingSystem->BuildMesh(SquareMesh);
     }
 
     void PhoenixApplication::UpdateApp() {
@@ -51,6 +59,7 @@ namespace Phoenix {
 
         renderingSystem->BindRenderBuffer(BackgroundRenderingBuffer);
         renderingSystem->Clear(Color(70, 70, 70, 1));
+        renderingSystem->DrawMesh(SquareMesh);
 
         renderingSystem->BindRenderBuffer(WindowsRenderingBuffer);
         renderingSystem->Clear(Color(0, 0, 0, 0));

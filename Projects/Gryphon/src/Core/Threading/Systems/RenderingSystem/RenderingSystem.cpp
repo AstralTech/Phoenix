@@ -30,6 +30,12 @@ namespace Engine {
             }
         }
 
+        for (int i = 0; i < internal_meshes.size(); i++) {
+            if (!internal_meshes[i]->HasMeshBeenBuilt()) {
+                Internal_BuildMesh(internal_meshes[i]);
+            }
+        }
+
         working_on_render = true;
 
         for (int k = 0; k < toRenderFrame.commands.size(); k++) {
@@ -39,6 +45,9 @@ namespace Engine {
             if (toRenderFrame.commands[k].name == "clear_buffer") {
                 Internal_Clear(std::any_cast<Color>(toRenderFrame.commands[k].args[0]));
             }
+            if (toRenderFrame.commands[k].name == "draw_mesh") {
+                Internal_DrawMesh(std::any_cast<Mesh*>(toRenderFrame.commands[k].args[0]));
+            }
         }
 
         working_on_render = false;
@@ -47,11 +56,20 @@ namespace Engine {
 
     }
 
+    void RenderingSystem::Internal_BuildMesh(Mesh* mesh) {
+        mesh->SetAsBuilt();
+        rendererLink->BuildPlatformMesh(mesh);
+    }
+
     void RenderingSystem::Internal_BindRenderBuffer(RenderBuffer* renderBuffer) {
         RenderingRenderBuffer* myRenderingBuffer = GetRenderingRenderBuffer(renderBuffer);
         rendererLink->BindRenderBuffer(myRenderingBuffer->platformRenderBuffer);
     }
     void RenderingSystem::Internal_Clear(Color color) {
         rendererLink->ClearScreen(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a);
+    }
+
+    void RenderingSystem::Internal_DrawMesh(Mesh* mesh) {
+        rendererLink->DrawMesh(mesh->GetPlatformMesh());
     }
 }   
