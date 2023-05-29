@@ -6,6 +6,7 @@
 #include "iostream"
 
 #include "../../Core/Threading/Systems/RenderingSystem/RenderBuffer.h"
+#include "OpenGLRenderBuffer.h"
 
 namespace Engine {
     static unsigned int CompileShader(unsigned int type, const std::string& source) {
@@ -43,51 +44,6 @@ namespace Engine {
         return program;
    } 
 
-    struct PlatformRenderBuffer {
-    public:
-        unsigned int framebuffer;
-        unsigned int textureColorbuffer;
-        unsigned int rbo;
-    public:
-        PlatformRenderBuffer(RenderBuffer* buffer) {
-            glGenFramebuffers(1, &framebuffer); 
-
-            // generate texture
-            glGenTextures(1, &textureColorbuffer);
-            glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, buffer->RenderBufferSize.x, buffer->RenderBufferSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-
-            // attach it to currently bound framebuffer object
-            glGenRenderbuffers(1, &rbo);
-            glBindRenderbuffer(GL_RENDERBUFFER, rbo); 
-            glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, buffer->RenderBufferSize.x, buffer->RenderBufferSize.y);  
-
-            glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);   
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0); 
-            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-
-            if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-                std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
-            else
-                std::cout << "Created a framebuffer\n";
-        }
-
-        void Bind() {
-            std::cout << "Binding framebuffer: " << framebuffer << "\n";
-
-            glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-        }
-
-        void BindForRendering() {
-            std::cout << "Frame buffer texture: " << textureColorbuffer << "\n";
-
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
-        }
-    };
-
     class RendererLink {
     public:
         unsigned int vao;
@@ -98,13 +54,13 @@ namespace Engine {
     public:
         void Init() {
             float vertex[24] = {
-                -0.5,  0.5, 0.0, 0.0,
-                -0.5, -0.5, 0.0, 1.0,
-                 0.5, -0.5, 1.0, 1.0,
+                -1.0,  1.0, 0.0, 0.0,
+                -1.0, -1.0, 0.0, 1.0,
+                 1.0, -1.0, 1.0, 1.0,
 
-                -0.5,  0.5, 0.0, 0.0,
-                 0.5,  0.5, 1.0, 0.0,
-                 0.5, -0.5, 1.0, 1.0
+                -1.0,  1.0, 0.0, 0.0,
+                 1.0,  1.0, 1.0, 0.0,
+                 1.0, -1.0, 1.0, 1.0
             };
             
             glGenVertexArrays(1, &vao);
@@ -163,13 +119,14 @@ namespace Engine {
 
             glDisable(GL_DEPTH_TEST);
 
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
             glBindVertexArray(vao);
             glUseProgram(shader);
             glDrawArrays(GL_TRIANGLES, 0, 6);
 
             glEnable(GL_DEPTH_TEST);
-
-            std::cout << "Drawing Buffer: " << buffer->framebuffer << "\n";
         }
 
         // Renderer Rendering Routines
@@ -180,8 +137,6 @@ namespace Engine {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-            std::cout << "Clearing Frame buffer\n";
         }
     };
 }
