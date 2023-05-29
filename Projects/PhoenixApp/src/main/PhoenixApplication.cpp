@@ -45,9 +45,16 @@ namespace Phoenix {
         // build the meshes
         SquareMesh = new Engine::Mesh();
         SquareMesh->SetVertexProperties({ Engine::VertexPropertyType::Float2 });
+
+
+        SquareMesh->AddVertex({ Float2(-0.5f,  0.5f) });
         SquareMesh->AddVertex({ Float2(-0.5f, -0.5f) });
         SquareMesh->AddVertex({ Float2( 0.5f, -0.5f) });
-        SquareMesh->AddVertex({ Float2( 0.0f,  0.5f) });
+        SquareMesh->AddVertex({ Float2( 0.5f,  0.5f) });
+
+        SquareMesh->AddTriangle(Int3(0, 1, 2));
+        SquareMesh->AddTriangle(Int3(0, 3, 2));
+
         renderingSystem->BuildMesh(SquareMesh);
     }
 

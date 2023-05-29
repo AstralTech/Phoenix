@@ -10,6 +10,8 @@
 #include "OpenGLMeshBuilder.h"
 #include "OpenGLMesh.h"
 
+#include "../../Core/Types/MultiData.h"
+
 namespace Engine {
     static unsigned int CompileShader(unsigned int type, const std::string& source) {
         unsigned int id = glCreateShader(type);
@@ -89,7 +91,7 @@ namespace Engine {
                 out vec2 vTexCoord;
 
                 void main() {
-                    vTexCoord = texCoord;
+                    vTexCoord = vec2(texCoord.x, -texCoord.y);
 
                     gl_Position = vec4(position, 0.0, 1.0);
                 }
@@ -171,29 +173,53 @@ namespace Engine {
 
             glBindVertexArray(mesh.MeshVAO);
             glUseProgram(basic_shader);
-            glDrawArrays(GL_TRIANGLES, 0, 3);
+            glDrawElements(GL_TRIANGLES, mesh.TriangleSize * 3, GL_UNSIGNED_INT, nullptr);
 
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
         }
 
         void BuildPlatformMesh(Mesh* mesh) {
             PlatformMesh new_mesh = PlatformMesh();
-
-            float vertex[6] = {
-                -0.5, -0.5,
-                 0.5, -0.5,
-                 0.0,  0.5
-            };
             
             glGenVertexArrays(1, &new_mesh.MeshVAO);
             glBindVertexArray(new_mesh.MeshVAO);
 
-            glGenBuffers(1, &new_mesh.MeshVBO);
-            glBindBuffer(GL_ARRAY_BUFFER, new_mesh.MeshVBO);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6, vertex, GL_STATIC_DRAW);
+            std::vector<VertexPropertyType> vertex_properties = mesh->GetVertexProperties();
+            std::vector<Vertex> vertices = mesh->GetVertices();
 
-            glEnableVertexAttribArray(0);
-            glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+            for (int i = 0; i < vertex_properties.size(); i++) {
+                new_mesh.MeshVBOs.push_back(0);
+                glGenBuffers(1, &new_mesh.MeshVBOs[i]);
+                glBindBuffer(GL_ARRAY_BUFFER, new_mesh.MeshVBOs[i]);
+            
+                if (vertex_properties[i] == VertexPropertyType::Float2) {
+                    std::vector<float> vert = {};
+                    for (int k = 0; k < vertices.size(); k++) {
+                        Float2 vertexvalue = std::any_cast<Float2>(vertices[k].vert_values[i]);
+                        vert.push_back(vertexvalue.x);
+                        vert.push_back(vertexvalue.y);
+                    }
+
+                    glBufferData(GL_ARRAY_BUFFER, sizeof(vert[0]) * vert.size(), &vert[0], GL_STATIC_DRAW);
+
+                    glEnableVertexAttribArray(0);
+                    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+                }
+            }
+
+            std::vector<Int3> mesh_triangles = mesh->GetTriangles();
+
+            std::vector<unsigned int> mesh_indicies = { };
+            for (int k = 0; k < mesh_triangles.size(); k++) { 
+                mesh_indicies.push_back(mesh_triangles[k].x);
+                mesh_indicies.push_back(mesh_triangles[k].y);
+                mesh_indicies.push_back(mesh_triangles[k].z);
+                new_mesh.TriangleSize++;
+            }
+
+            glGenBuffers(1, &new_mesh.MeshIBO);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, new_mesh.MeshIBO);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mesh_indicies), &mesh_indicies[0], GL_STATIC_DRAW);
 
             mesh->SetPlatformMesh(new_mesh);
         }
