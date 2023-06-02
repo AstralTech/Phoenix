@@ -44,13 +44,13 @@ namespace Phoenix {
 
         // build the meshes
         SquareMesh = new Engine::Mesh();
-        SquareMesh->SetVertexProperties({ Engine::VertexPropertyType::Float2 });
+        SquareMesh->SetVertexProperties({ Engine::VertexPropertyType::Float2, Engine::VertexPropertyType::Color });
 
 
-        SquareMesh->AddVertex({ Float2(-0.5f,  0.5f) });
-        SquareMesh->AddVertex({ Float2(-0.5f, -0.5f) });
-        SquareMesh->AddVertex({ Float2( 0.5f, -0.5f) });
-        SquareMesh->AddVertex({ Float2( 0.5f,  0.5f) });
+        SquareMesh->AddVertex({ Float2(-0.5f,  0.5f), Color(255,   0,   0, 1.0) });
+        SquareMesh->AddVertex({ Float2(-0.5f, -0.5f), Color(  0, 255,   0, 1.0) });
+        SquareMesh->AddVertex({ Float2( 0.5f, -0.5f), Color(  0,   0, 255, 1.0) });
+        SquareMesh->AddVertex({ Float2( 0.5f,  0.5f), Color(255, 255, 255, 1.0) });
 
         SquareMesh->AddTriangle(Int3(0, 1, 2));
         SquareMesh->AddTriangle(Int3(0, 3, 2));

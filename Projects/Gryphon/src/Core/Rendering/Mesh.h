@@ -9,7 +9,8 @@
 namespace Engine {
 
     enum class VertexPropertyType {
-        Float2
+        Float2, Flaot3, Float4,
+        Color
     };
     
     class Vertex {

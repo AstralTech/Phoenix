@@ -116,9 +116,12 @@ namespace Engine {
                 #version 330 core
 
                 layout(location = 0) in vec2 position;
+                layout(location = 1) in vec4 color;
+
+                out vec4 vColor;
 
                 void main() {
-
+                    vColor = color;
                     gl_Position = vec4(position, 0.0, 1.0);
                 }
             )";
@@ -128,8 +131,10 @@ namespace Engine {
 
                 layout(location = 0) out vec4 color;
 
+                in vec4 vColor;
+
                 void main() {
-                    color = vec4(1.0, 1.0, 1.0, 1.0);
+                    color = vColor;
                 }           
             )";
 
@@ -187,11 +192,18 @@ namespace Engine {
             std::vector<VertexPropertyType> vertex_properties = mesh->GetVertexProperties();
             std::vector<Vertex> vertices = mesh->GetVertices();
 
+            unsigned int* mesh_vbos = new unsigned int[mesh->GetVertexProperties().size()];
+
+            glGenBuffers(mesh->GetVertexProperties().size(), mesh_vbos);
+
+            for (int i = 0; i < mesh->GetVertexProperties().size(); i++) {
+                new_mesh.MeshVBOs.push_back(mesh_vbos[i]);
+            }
+
             for (int i = 0; i < vertex_properties.size(); i++) {
-                new_mesh.MeshVBOs.push_back(0);
-                glGenBuffers(1, &new_mesh.MeshVBOs[i]);
+                std::cout << new_mesh.MeshVBOs[i] << "\n";
                 glBindBuffer(GL_ARRAY_BUFFER, new_mesh.MeshVBOs[i]);
-            
+
                 if (vertex_properties[i] == VertexPropertyType::Float2) {
                     std::vector<float> vert = {};
                     for (int k = 0; k < vertices.size(); k++) {
@@ -202,9 +214,27 @@ namespace Engine {
 
                     glBufferData(GL_ARRAY_BUFFER, sizeof(vert[0]) * vert.size(), &vert[0], GL_STATIC_DRAW);
 
-                    glEnableVertexAttribArray(0);
-                    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+                    glEnableVertexAttribArray(i);
+                    glVertexAttribPointer(i, 2, GL_FLOAT, GL_FALSE, 0, 0);
+                } else if (vertex_properties[i] == VertexPropertyType::Color) {
+
+                    std::vector<float> vert = {};
+                    for (int k = 0; k < vertices.size(); k++) {
+                        Color vertexvalue = std::any_cast<Color>(vertices[k].vert_values[i]);
+                        vert.push_back(vertexvalue.r / 255.0f);
+                        vert.push_back(vertexvalue.g / 255.0f);
+                        vert.push_back(vertexvalue.b / 255.0f);
+                        vert.push_back(vertexvalue.a);
+                    }
+
+                    glBufferData(GL_ARRAY_BUFFER, sizeof(vert[0]) * vert.size(), &vert[0], GL_STATIC_DRAW);
+
+                    glEnableVertexAttribArray(i);
+                    glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, 0, 0);                   
+                } else {
+                    std::cout << "Not supported vertex property type";
                 }
+                glBindBuffer(GL_ARRAY_BUFFER, 0);
             }
 
             std::vector<Int3> mesh_triangles = mesh->GetTriangles();
