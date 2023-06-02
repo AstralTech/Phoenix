@@ -1,0 +1,22 @@
+[ Things I did today ]
+- Rendering pipeline
+    - the ability to create meshes and specify index buffers for them
+
+[ Things I did not finish today ]
+- Shaders
+    - Right now i am just creating shaders with text in a file but I want to change that
+
+[ Things im doing tommorow ]
+- Shaders
+    - Right now i am just creating shaders with text in a file but I want to change that tommorow
+
+[ Things I would love to do tommorow ]
+
+[ Bugs I fixed]
+
+[ Bugs that I am aware of ]
+- When you close an Auxiliary window X11 seg faults
+- Sometimes the program just throws a bad anycast error I need to know how to fix that
+
+[ Goals for tommorow ]
+- get to 2100 lines of code
