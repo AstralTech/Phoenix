@@ -3,11 +3,11 @@
 #include "Settings.h"
 
 #if (GRYPHON_RENDERER == OPENGL)
-#include "OpenGL/OpenGL.h"
+#include "OpenGL/OpenGLMesh.h"
 #elif (GRYPHON_RENDERER == VULKAN) 
-#include "Vulkan/Vulkan.h"
+#include "Vulkan/VulkanMesh.h"
 #elif (GRYPHON_RENDERER == DIRECTX)
-#include "DirectX/DirectX.h"
+#include "DirectX/DirectXMesh.h"
 #elif (GRYPHON_RENDERER == METAL)
-#include "Metal/Metal.h"
+#include "Metal/MetalMesh.h"
 #endif

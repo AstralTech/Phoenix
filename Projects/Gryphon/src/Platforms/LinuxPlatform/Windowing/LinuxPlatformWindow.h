@@ -11,9 +11,7 @@
 
 #if (GRYPHON_RENDERER == OPENGL)
 
-#define GLEW_STATIC
-
-#include <glew/glew.h>
+#include <GL/glew.h>
 #include "GL/glx.h"
 
 typedef GLXContext (*glXCreateContextAttribsARBProc)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
@@ -36,7 +34,7 @@ namespace Engine {
         Screen* screen;
         int screenId;
         GLXContext context;
-
+        XEvent ev;
         XVisualInfo* visual;
 
         std::vector<Event*> events = {};
@@ -44,6 +42,8 @@ namespace Engine {
         bool first_window = false;
 
         glXCreateContextAttribsARBProc glXCreateContextAttribsARB = 0;
+
+        std::vector<PlatformWindow*> windows;
     public:
         void CreateContext () {
             #if (GRYPHON_RENDERER == OPENGL)
@@ -120,7 +120,7 @@ namespace Engine {
         }
 
         PlatformWindowManager() {
-            XInitThreads();
+            //XInitThreads();
 
 
             // Open the display
@@ -130,13 +130,11 @@ namespace Engine {
             }
             screen = DefaultScreenOfDisplay(display);
             screenId = DefaultScreen(display);
-            
-            #if (GRYPHON_RENDERER == OPENGL)
-
-            #endif
-
+        
             CreateContext();
         }
+
+        void UpdateEventQueue();
 
         template <typename T>
         void SubmitEvent(T EventData) {
@@ -151,20 +149,12 @@ namespace Engine {
             events = {};
         }
 
-        void RegisterWindow(Window window) {
-            glXMakeCurrent(display, window, context);
-
-            GLenum err = glewInit();
-            if (GLEW_OK != err){
-                std::cout << glewGetErrorString(err);
-            }
-        }
+        void RegisterWindow(PlatformWindow* window);
     };
 
     class PlatformWindow {
-    private:
+    protected:
         Window window;
-        XEvent ev;
         XContext windowContext;
         Atom atomWmDeleteWindow;
 
@@ -173,6 +163,8 @@ namespace Engine {
         bool isClosed = false;
 
         const char* windowname;
+
+        friend class PlatformWindowManager;
     public:
         bool IsClosed() { return isClosed; }
 
@@ -204,32 +196,28 @@ namespace Engine {
             XClearWindow(platformWindowManager->display, window);
             XMapRaised(platformWindowManager->display, window);
 
-            platformWindowManager->RegisterWindow(window);
+            platformWindowManager->RegisterWindow(this);
         }
 
         void UpdatePlatformWindow() {
             if (IsClosed())
                 return;
 
-            #if (GRYPHON_RENDERER == OPENGL) 
             glXMakeCurrent(platformWindowManager->display, window, platformWindowManager->context);
-
-            glClearColor(0.0, 0.0, 0.0, 1.0);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            glXSwapBuffers(platformWindowManager->display, window);
-            #endif
         }
 
-        void ManageWindowEvents() {
-            if (isClosed)
-                return;
-            XNextEvent(platformWindowManager->display, &ev);
+        void StartWindowDraw() {
+            glClearColor(0, 0, 0, 1.0);
+            glClear(GL_COLOR_BUFFER_BIT);
+        }
 
-            Window evWindow = ev.xany.window;
+        void EndWindowDraw() {
+            glXSwapBuffers(platformWindowManager->display, window);
+        }
 
+        void ManageWindowEvents(XEvent ev) {
             if (ev.type == Expose) {
-                XClearWindow(platformWindowManager->display, evWindow);
+                
             }
             if (ev.type == KeyPress) {
                 platformWindowManager->SubmitEvent<KeyPressedEvent>(KeyPressedEvent(Engine::KeyCode::A));
@@ -238,10 +226,8 @@ namespace Engine {
                 platformWindowManager->SubmitEvent<KeyReleasedEvent>(KeyReleasedEvent(Engine::KeyCode::A));
             }
             if (ev.type == ClientMessage) {
-				XDestroyWindow(platformWindowManager->display, evWindow);
-                if (evWindow == window) {
-                    CloseWindow();
-                }
+				XDestroyWindow(platformWindowManager->display, window);
+                CloseWindow();
 			}
         }
 

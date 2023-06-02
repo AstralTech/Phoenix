@@ -8,26 +8,24 @@
 
 namespace Engine {
     class EventSystem;
+    class RenderingSystem;
+
+    struct RenderBuffer;
+    
+    enum RenderBufferType {
+        Background, Object
+    };
 
     struct WindowingWindow {
     public:
         WindowObject* windowObject;
         PlatformWindow* platformWindow;
         bool Opened = false;
-
-        ExecutionThread* EventThread;
     public:
         bool IsClosed() { return platformWindow->IsClosed(); }
 
         WindowingWindow(WindowObject* object) {
             this->windowObject = object;
-        }
-
-        void HandleEvents() {
-            while (true) {
-                if (Opened)
-                    platformWindow->ManageWindowEvents();
-            }
         }
     };
 
@@ -36,6 +34,9 @@ namespace Engine {
         std::vector<WindowingWindow*> windows = {};
         WindowingWindow* mainWindow;
 
+        //ExecutionThread* eventThread;
+
+        RenderingSystem* renderingSystem;
 
         PlatformWindowManager* windowManager;
         EventSystem* eventSystem;
@@ -62,6 +63,8 @@ namespace Engine {
             else 
                 return false; 
         }
+
+        void DrawToWindow(WindowObject* window_to_draw, RenderBuffer* render_buffer, RenderBufferType render_buffer_type, Int2 position = Int2(0));
 
         virtual void OnStart()override;
         virtual void OnUpdate() override;

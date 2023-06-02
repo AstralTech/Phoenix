@@ -15,10 +15,13 @@ namespace Phoenix {
         renderingSystem = new Engine::RenderingSystem();
 
         BackgroundRenderingBuffer = new Engine::RenderBuffer(Int2(1920, 1080));
-        TestWindowRenderingBuffer = new Engine::RenderBuffer(Int2(200, 300));
+        WindowsRenderingBuffer = new Engine::RenderBuffer(Int2(1920, 1080));
+
+        PhoenixWindow->AddRenderBuffer(BackgroundRenderingBuffer);
+        PhoenixWindow->AddRenderBuffer(WindowsRenderingBuffer);
 
         renderingSystem->RegisterBuffer(BackgroundRenderingBuffer);
-        renderingSystem->RegisterBuffer(TestWindowRenderingBuffer);
+        renderingSystem->RegisterBuffer(WindowsRenderingBuffer);
 
         renderingGroup->BindSystem(windowingSystem);
         renderingGroup->BindSystem(renderingSystem);
@@ -38,23 +41,37 @@ namespace Phoenix {
         executionManager->BindGroup(eventGroup);
 
         executionManager->StartExecution();
+
+        // build the meshes
+        SquareMesh = new Engine::Mesh();
+        SquareMesh->SetVertexProperties({ Engine::VertexPropertyType::Float2, Engine::VertexPropertyType::Color });
+
+
+        SquareMesh->AddVertex({ Float2(-0.5f,  0.5f), Color(255,   0,   0, 1.0) });
+        SquareMesh->AddVertex({ Float2(-0.5f, -0.5f), Color(  0, 255,   0, 1.0) });
+        SquareMesh->AddVertex({ Float2( 0.5f, -0.5f), Color(  0,   0, 255, 1.0) });
+        SquareMesh->AddVertex({ Float2( 0.5f,  0.5f), Color(255, 255, 255, 1.0) });
+
+        SquareMesh->AddTriangle(Int3(0, 1, 2));
+        SquareMesh->AddTriangle(Int3(0, 3, 2));
+
+        renderingSystem->BuildMesh(SquareMesh);
     }
 
     void PhoenixApplication::UpdateApp() {
         if (windowingSystem->WindowsClosed())
             EndApp();
 
-        #if 1 == 0
-        renderingSystem->BindBuffer(BackgroundRenderingBuffer);
-        renderingSystem->Clear(Color(128, 128, 128, 1));
-        
-        windowingSystem->DrawToWindow_Background(PhoenixWindow);
+        renderingSystem->BeginRendererFrame();
 
-        renderingSystem->BindBuffer(TestWindowRenderingBuffer);
-        renderingSystem->Clear(Color(255, 0, 0, 1));
-        
-        windowingSystem->DrawToWindow_Object(PhoenixWindow, Int2(100, 100));
-        #endif
+        renderingSystem->BindRenderBuffer(BackgroundRenderingBuffer);
+        renderingSystem->Clear(Color(70, 70, 70, 1));
+        renderingSystem->DrawMesh(SquareMesh);
+
+        renderingSystem->BindRenderBuffer(WindowsRenderingBuffer);
+        renderingSystem->Clear(Color(0, 0, 0, 0));
+
+        renderingSystem->EndRendererFrame();
     }
 
     void PhoenixApplication::CloseApp() {
